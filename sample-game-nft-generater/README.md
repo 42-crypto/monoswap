@@ -1,0 +1,3 @@
+# SmapleNFTGenerater
+## setup
+## generate NFT
