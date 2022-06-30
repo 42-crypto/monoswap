@@ -1,20 +1,24 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: #0366d6;
 }
 
-* {
-  box-sizing: border-box;
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline;
 }
+
+hr {
+  @apply mt-10;
+  border: 1px solid #ddd;
+}
+
+@tailwind components;
+
+@tailwind utilities;

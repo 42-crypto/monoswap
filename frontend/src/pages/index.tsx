@@ -24,12 +24,10 @@ const Home: NextPage = () => {
 
         <div>
           <h2 className='font-semibold text-2xl'>Order List</h2>
+          <Link href='/orders/testCreateOrder'>
+            <a className='text-blue-700'>Test Create Order</a>
+          </Link>
           <ul>
-            <li>
-              <Link href='/orders/test'>
-                <a className='text-blue-700'>Order 1</a>
-              </Link>
-            </li>
             <li>
               <Link href='#'>
                 <a className='text-blue-700'>Order 2</a>
