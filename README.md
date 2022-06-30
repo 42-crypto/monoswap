@@ -1,5 +1,5 @@
 ### 概要
-ウォレットで接続したユーザーは注文（Order）の作成と閲覧ができる。
+ウォレットで接続したユーザーはOrderの作成、閲覧、Fulfillすることができる。
 
 ### Offerer
 1. New Orderから新しいオーダー作成画面
@@ -10,4 +10,4 @@
 
 ### Fullfiller
 1. Order一覧からフルフィルできるOrderを選択
-2. 自分のウォレットの中からConsiderationに合ったトークン（ERC721・ERC20）を選んでFullfillする
+2. 自分のウォレットの中からConsiderationに合ったトークン（ERC721・ERC20）を選んでFulfillする
