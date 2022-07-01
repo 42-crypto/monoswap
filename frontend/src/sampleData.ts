@@ -1,7 +1,7 @@
 import { ItemType } from '@opensea/seaport-js/lib/constants';
 import { Item, Order, Game } from '@/types';
 
-const item1: Item = {
+export const item1: Item = {
   name: 'Test 1',
   description: '',
   imageUrl:
@@ -79,8 +79,8 @@ const matic: Item = {
   },
 };
 
-const order1: Order = {
-  id: 1,
+export const order1: Order = {
+  id: 'a',
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1, item2],
   considerationItems: [item3, matic],
@@ -134,10 +134,11 @@ const order1: Order = {
     signature:
       '0xa454cfc358c73731fb3abc6e6ee4bf0b932103d7f376a03b35ff67d70fa78507404e42f82cf950aecb332d6bfdb755f68de4b25c57ae4741303762739f6558f5',
   },
+  createdAt: new Date()
 };
 
 const order2: Order = {
-  id: 2,
+  id: 'b',
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1],
   considerationItems: [item3, item4, matic],
@@ -192,10 +193,11 @@ const order2: Order = {
     signature:
       '0x1e23088954e5455913f88f7caca0dc4682401fb93d9f0a052b1682741063d8e59e7891cc2b241d1217bf6b5ed362a84ad9ba59de5821f02df5516c923b91b683',
   },
+  createdAt: new Date()
 };
 
 const order3: Order = {
-  id: 3,
+  id: 'c',
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1],
   considerationItems: [item3],
@@ -234,25 +236,26 @@ const order3: Order = {
     signature:
       '0xd83357b2a5de2a7d1df2cfcf5cc3bf93885602d4c624a0e94810894fda931fcef04492cf1c70795f5e3e62cdf589fbc5bf0de4857921806f9780bb23af688df6',
   },
+  createdAt: new Date()
 };
 
 export const sampleOrders: Order[] = [order1, order2, order3];
 
 export const sampleGames: Game[] = [
   {
-    id: 1,
+    id: 'a',
     name: 'Test Game',
     description: 'This is a test game',
     imageUrl: '',
   },
   {
-    id: 2,
+    id: 'b',
     name: 'Spongebob Game',
     description: 'This is a test game',
     imageUrl: '',
   },
   {
-    id: 3,
+    id: 'c',
     name: 'Sexy Hunters',
     description: 'This is a test game',
     imageUrl: '',

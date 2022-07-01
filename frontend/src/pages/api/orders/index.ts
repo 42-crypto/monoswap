@@ -1,8 +1,10 @@
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sampleOrders } from '@/sampleData';
 import { Order } from '@/types';
+import { firebaseApp, firebaseAuth, firebaseFirestore } from '@/utils/firebase';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
       // サンプルデータ用

@@ -12,7 +12,7 @@ export type User = {
 
 // ゲーム
 export type Game = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   imageUrl: string;
@@ -32,9 +32,10 @@ export type Item = {
 
 // Seaportオーダー
 export type Order = {
-  id: number;
+  id: string;
   offerer: string; // Offererのアドレス
   offerItems: Item[];
   considerationItems: Item[];
   order: OrderWithCounter; // SeaportのcreateOfferが成功した時返されるオブジェクト。FulFillのときに必要
+  createdAt: Date;
 };
