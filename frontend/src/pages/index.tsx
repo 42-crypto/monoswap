@@ -22,12 +22,12 @@ const IndexPage: NextPage = () => {
   return (
     <Layout>
       <div className=''>
-        <Link href='/orders/sampleCreateOrder'>
-          <a className='text-blue-700'>Sample Create Order</a>
+        <Link href='/orders/create'>
+          <a className='text-blue-700'>Create Order</a>
         </Link>
-        <Link href='/orders/sampleFulfillOrder'>
+        {/* <Link href='/orders/sampleFulfillOrder'>
           <a className='text-blue-700'>Sample Fulfill Order</a>
-        </Link>
+        </Link> */}
 
         <h2 className='font-semibold text-2xl'>Game List</h2>
         {gameError && (
