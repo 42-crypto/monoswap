@@ -14,27 +14,7 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
 
-export type OfferItem = {
-  name: string;
-  description: string;
-  imageUrl: string;
-  tokenId: string;
-  contractAddress: string;
-  symbol: string;
-  gameName: string;
-  inputItem: CreateInputItem;
-};
-
-export type ConsiderationItem = {
-  name: string;
-  description: string;
-  imageUrl: string;
-  tokenId: string;
-  contractAddress: string;
-  symbol: string;
-  gameName: string;
-  inputItem: ConsiderationInputItem;
-};
+import { Item } from '@/types';
 
 const TestFulfillOrder: NextPage = () => {
   // change to {}
@@ -46,16 +26,23 @@ const TestFulfillOrder: NextPage = () => {
       offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
       zone: '0x0000000000000000000000000000000000000000',
       zoneHash: '0x3000000000000000000000000000000000000000000000000000000000000000',
-      startTime: '1656657026',
+      startTime: '1656677746',
       endTime: '115792089237316195423570985008687907853269984665640564039457584007913129639935',
       orderType: 0,
       offer: [
         {
-          itemType: 0,
-          token: '0x0000000000000000000000000000000000000000',
-          identifierOrCriteria: '0',
-          startAmount: '100000000000000000',
-          endAmount: '100000000000000000',
+          itemType: 2,
+          token: '0xa3e62daa9a071085e44f606cfa5f2480d7e3133a',
+          identifierOrCriteria: '1',
+          startAmount: '1',
+          endAmount: '1',
+        },
+        {
+          itemType: 2,
+          token: '0xa3e62daa9a071085e44f606cfa5f2480d7e3133a',
+          identifierOrCriteria: '2',
+          startAmount: '1',
+          endAmount: '1',
         },
       ],
       consideration: [
@@ -68,21 +55,21 @@ const TestFulfillOrder: NextPage = () => {
           recipient: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
         },
         {
-          itemType: 2,
-          token: '0xA3e62dAa9a071085e44f606cFa5f2480d7e3133a',
-          identifierOrCriteria: '2',
-          startAmount: '1',
-          endAmount: '1',
+          itemType: 0,
+          token: '0x0000000000000000000000000000000000000000',
+          identifierOrCriteria: '0',
+          startAmount: '100000000000000000',
+          endAmount: '100000000000000000',
           recipient: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
         },
       ],
       totalOriginalConsiderationItems: 2,
-      salt: '0xffec368326cae1201c2d2fd8c93dbd65',
+      salt: '0xd10f06724d683fc1176535ad39143dee',
       conduitKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
       counter: 0,
     },
     signature:
-      '0x7fbb567068960326fc0698c84de40267ccd9093bc010c89df9a85ab4e09d2526175b54531c8adeca4a2e4477c3485b33325f881ae7bdad0f483d18062dd5486e',
+      '0xc06fb4fb11df13d732f76bd3d00b56c3345f8ee8fb7f99a77d468856c3ae42be8c83b548a0d40b0bda988dd8de4b021714fb2f5a676c36b6a761ac76e8daa2fa',
   };
 
   const testSeaportFulfillOrder = async () => {

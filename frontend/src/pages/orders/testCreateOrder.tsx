@@ -3,11 +3,11 @@ import { ItemType } from '@opensea/seaport-js/lib/constants';
 // import { CreateInputItem } from '@opensea/seaport-js/lib/types';
 import {
   CreateOrderInput,
-  CreateInputItem,
-  ConsiderationInputItem,
-  CurrencyItem,
-  Fee,
   OrderWithCounter,
+  // CreateInputItem,
+  // ConsiderationInputItem,
+  // CurrencyItem,
+  // Fee,
 } from '@opensea/seaport-js/lib/types';
 
 import { ethers, providers } from 'ethers';
@@ -15,28 +15,7 @@ import { parseEther } from 'ethers/lib/utils';
 import { NextPage } from 'next';
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
-
-export type OfferItem = {
-  name: string;
-  description: string;
-  imageUrl: string;
-  tokenId: string;
-  contractAddress: string;
-  symbol: string;
-  gameName: string;
-  inputItem: CreateInputItem;
-};
-
-export type ConsiderationItem = {
-  name: string;
-  description: string;
-  imageUrl: string;
-  tokenId: string;
-  contractAddress: string;
-  symbol: string;
-  gameName: string;
-  inputItem: ConsiderationInputItem;
-};
+import { Item } from '@/types';
 
 const TestCreateOrder: NextPage = () => {
   // change to {}
@@ -44,7 +23,7 @@ const TestCreateOrder: NextPage = () => {
   console.log('account: ', account);
 
   // const [offerItems, setOfferItems] = useState<OfferItem[]>([]);
-  const offerItems: OfferItem[] = [
+  const offerItems: Item[] = [
     {
       name: '',
       description: '',
@@ -52,16 +31,16 @@ const TestCreateOrder: NextPage = () => {
       tokenId: '',
       contractAddress: '',
       symbol: '',
-      gameName: '',
+      game: '',
       inputItem: {
-        amount: (0.1 * 10 ** 18).toString(),
-        endAmount: (0.1 * 10 ** 18).toString(),
+        itemType: ItemType.ERC721,
+        token: '0xa3e62daa9a071085e44f606cfa5f2480d7e3133a',
+        identifier: '1',
       },
     },
   ];
 
-  // const [considerationItems, setConsiderationItems] = useState<ConsideratinItem[]>([]);
-  const considerationItems: ConsiderationItem[] = [
+  const considerationItems: Item[] = [
     {
       name: '',
       description: '',
@@ -69,25 +48,11 @@ const TestCreateOrder: NextPage = () => {
       tokenId: '',
       contractAddress: '',
       symbol: '',
-      gameName: '',
+      game: '',
       inputItem: {
         itemType: ItemType.ERC721,
-        token: '0xA3e62dAa9a071085e44f606cFa5f2480d7e3133a',
-        identifier: '1',
-      },
-    },
-    {
-      name: '',
-      description: '',
-      imageUrl: '',
-      tokenId: '',
-      contractAddress: '',
-      symbol: '',
-      gameName: '',
-      inputItem: {
-        itemType: ItemType.ERC721,
-        token: '0xA3e62dAa9a071085e44f606cFa5f2480d7e3133a',
-        identifier: '2',
+        token: '0x345186024fff73e0cdc4fed3b565e6c21815c7ed',
+        identifier: '8',
       },
     },
   ];
