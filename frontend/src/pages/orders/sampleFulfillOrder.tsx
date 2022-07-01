@@ -16,7 +16,7 @@ import { useAccount } from 'wagmi';
 
 import { Item } from '@/types';
 
-const TestFulfillOrder: NextPage = () => {
+const SampleFulfillOrder: NextPage = () => {
   // change to {}
   const { address, isConnecting, isDisconnected } = useAccount();
   console.log('account address: ', address);
@@ -122,4 +122,4 @@ const TestFulfillOrder: NextPage = () => {
   );
 };
 
-export default TestFulfillOrder;
+export default SampleFulfillOrder;
