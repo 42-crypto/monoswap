@@ -1,67 +1,177 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// eslint-disable-next-line import/named
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import type { NextPage } from 'next';
-import { useAccount } from 'wagmi';
+import Head from 'next/head';
+import Link from 'next/link';
 
-function Header() {
-  const { address, isConnected } = useAccount();
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { FC, useCallback, useEffect, useState } from 'react';
+import { SiweMessage } from 'siwe';
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsName,
+  useNetwork,
+  useSignMessage,
+} from 'wagmi';
 
-  if (isConnected) {
-    console.log('Connected to: ', address);
+// eslint-disable-next-line import/no-unresolved
+import Navbar from '@/components/navbar';
+import { firebaseApp, firebaseAuth, firebaseFirestore } from '@/utils/firebase';
+
+const Header: NextPage = () => {
+  const { address } = useAccount();
+  const { data: ensName } = useEnsName({ address: address });
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+  const { signMessageAsync } = useSignMessage();
+  const { chain } = useNetwork();
+
+  const [state, setState] = useState<{
+    address?: string;
+    error?: Error;
+    loading?: boolean;
+    currentUser?: User;
+  }>({});
+
+  const signOut = async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    setState({});
+  };
+
+  const signIn = async () => {
+    try {
+      const chainId = chain?.id;
+      if (!address || !chainId) return alert('No account or chain');
+
+      setState((x) => ({ ...x, error: undefined, loading: true }));
+
+      const nonceRes = await fetch('/api/nonce');
+      const message = new SiweMessage({
+        domain: window.location.host,
+        address,
+        statement: 'Sign in with Ethereum to the app.',
+        uri: window.location.origin,
+        version: '1',
+        chainId,
+        nonce: await nonceRes.text(),
+      });
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      });
+      if (!signature) throw Error('Signature is empty');
+
+      const verifyRes = await fetch('/api/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message, signature }),
+      });
+      if (!verifyRes.ok) throw new Error('Error verifying message');
+
+      // todo: cloud functionでfirebase authのカスタムトークン認証
+
+      const email = `${address}.3@${firebaseApp.options.authDomain}`;
+      const password = address;
+      console.log('email', email);
+      console.log('pass', password);
+      console.log('will firebase sign in');
+      signInWithEmailAndPassword(firebaseAuth, email, password)
+        .then((userCredential) => {
+          console.log('success to firebase sign in');
+          const user = userCredential.user;
+          setState((x) => ({ ...x, currentUser: user, address, loading: false }));
+        })
+        .catch((error) => {
+          console.log('fail firebase sign in');
+          createUserWithEmailAndPassword(firebaseAuth, email, password)
+            .then((userCredential) => {
+              console.log('success to create firebase user');
+              const user = userCredential.user;
+              setState((x) => ({ ...x, currentUser: user, address, loading: false }));
+            })
+            .catch((error) => {
+              console.log('fail to create firebase user');
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              setState((x) => ({ ...x, address, loading: false }));
+              return alert(`error: fail to create firebase user`);
+            });
+        });
+      // @ts-expect-error we are assigning a type to error
+    } catch (error: Error) {
+      setState((x) => ({ ...x, error, loading: false }));
+      return alert(`error: ${error.message}`);
+    }
+  };
+
+  const didTapCreateOrder = async () => {
+    console.log('will create doc');
+    await setDoc(doc(firebaseFirestore, 'cities', 'LAbcd'), {
+      name: 'Los Angeles',
+      state: 'CA',
+      country: 'USA',
+    });
+    console.log('create doc');
+  };
+
+  const didTapOrderList = async () => {
+    console.log('will create doc');
+    await setDoc(doc(firebaseFirestore, 'cities', 'LAbcd'), {
+      name: 'Los Angeles',
+      state: 'CA',
+      country: 'USA',
+    });
+    console.log('create doc');
+  };
+
+  useEffect(() => {
+    const handler = async () => {
+      try {
+        const res = await fetch('/api/me');
+        const json = await res.json();
+        setState((x) => ({ ...x, address: json.address }));
+      } catch (_error) {}
+    };
+
+    handler();
+
+    window.addEventListener('focus', handler);
+    return () => window.removeEventListener('focus', handler);
+  }, []);
+
+  if (address) {
+    // if wallet is connected
+    return (
+      <div>
+        <div>
+          {state.address && state.currentUser
+            ? // user has signed in
+              Navbar(didTapOrderList, didTapCreateOrder, signOut, address)
+            : Navbar(didTapOrderList, didTapCreateOrder, signIn, 'Sign In')}
+        </div>
+      </div>
+    );
   }
 
+  // if wallet is not connected
   return (
-    <header>
-      <nav className='flex items-center justify-between flex-wrap bg-teal-500 p-6'>
-        <div className='flex items-center flex-shrink-0 text-white mr-6'>
-          <svg
-            className='fill-current h-8 w-8 mr-2'
-            width='54'
-            height='54'
-            viewBox='0 0 54 54'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path d='M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z' />
-          </svg>
-          <span className='font-semibold text-xl tracking-tight'>Tailwind CSS</span>
-        </div>
-        <div className='block lg:hidden'>
-          <button className='flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white'>
-            <svg
-              className='fill-current h-3 w-3'
-              viewBox='0 0 20 20'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <title>Menu</title>
-              <path d='M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z' />
-            </svg>
-          </button>
-        </div>
-        <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
-          <div className='text-sm lg:flex-grow'>
-            <a
-              href='#responsive-header'
-              className='block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4'
-            >
-              Docs
-            </a>
-            <a
-              href='#responsive-header'
-              className='block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4'
-            >
-              Examples
-            </a>
-            <a
-              href='#responsive-header'
-              className='block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white'
-            >
-              Blog
-            </a>
-          </div>
-          <div>
-            <ConnectButton />
-          </div>
-        </div>
-      </nav>
-    </header>
+    <div>
+      <div>
+        {connectors.map((connector) => {
+          return Navbar(
+            didTapOrderList,
+            didTapCreateOrder,
+            () => connect({ connector }),
+            'CONNECT',
+          );
+        })}
+      </div>
+    </div>
   );
-}
+};
+
+export default Header;
