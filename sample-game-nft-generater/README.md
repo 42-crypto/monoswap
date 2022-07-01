@@ -12,7 +12,7 @@ NFTのjsonを[jsonkeeper](https://jsonkeeper.com/)で作成
 deploy.jsを開き
 addressToSendに送る相手のアドレスをいれる
 uriArrayにjsonkeeperで作ったNFTのjsonuriをいれる
-に送る相手のアドレスをいれ以下を実行する
+addressToSendもuriArrayも一応３つあるので適宜コメントして消す
 
 ```
 npx hardhat run scripts/deploy.js --network mumbai
