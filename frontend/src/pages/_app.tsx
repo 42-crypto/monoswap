@@ -1,38 +1,37 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import '@rainbow-me/rainbowkit/styles.css';
+import { WagmiConfig, createClient, defaultChains, configureChains } from 'wagmi';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+// Get environment variables
+const alchemyId = process.env.ALCHEMY_ID
 
-// Configure Rainbowkit
-const { chains, provider } = configureChains(
-  [chain.polygonMumbai, chain.goerli, chain.mainnet, chain.polygon, chain.rinkeby],
-  [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()],
-);
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  alchemyProvider({}),
+  publicProvider(),
+])
 
-const { connectors } = getDefaultWallets({
-  appName: 'Monoswap',
-  chains,
-});
-
-const wagmiClient = createClient({
+// Set up connectors
+const client = createClient({
   autoConnect: true,
-  connectors,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+  ],
   provider,
+  webSocketProvider,
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
-      </RainbowKitProvider>
+    <WagmiConfig client={client}>
+      <Component {...pageProps} />
     </WagmiConfig>
   );
-  return <Component {...pageProps} />;
 }
 
 export default MyApp;
