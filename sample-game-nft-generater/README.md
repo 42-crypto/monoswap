@@ -15,5 +15,5 @@ uriArrayにjsonkeeperで作ったNFTのjsonuriをいれる
 に送る相手のアドレスをいれ以下を実行する
 
 ```
-npx hardhat run scripts/run.js
+npx hardhat run scripts/deploy.js --network mumbai
 ```
