@@ -46,42 +46,49 @@ const TestFulfillOrder: NextPage = () => {
       offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
       zone: '0x0000000000000000000000000000000000000000',
       zoneHash: '0x3000000000000000000000000000000000000000000000000000000000000000',
-      startTime: '1656593071',
+      startTime: '1656657026',
       endTime: '115792089237316195423570985008687907853269984665640564039457584007913129639935',
       orderType: 0,
       offer: [
         {
-          itemType: 2,
-          token: '0x345186024FFF73E0cdc4feD3b565e6c21815c7Ed',
-          identifierOrCriteria: '8',
-          startAmount: '1',
-          endAmount: '1',
+          itemType: 0,
+          token: '0x0000000000000000000000000000000000000000',
+          identifierOrCriteria: '0',
+          startAmount: '100000000000000000',
+          endAmount: '100000000000000000',
         },
       ],
       consideration: [
         {
           itemType: 2,
-          token: '0x345186024FFF73E0cdc4feD3b565e6c21815c7Ed',
-          identifierOrCriteria: '9',
+          token: '0xA3e62dAa9a071085e44f606cFa5f2480d7e3133a',
+          identifierOrCriteria: '1',
+          startAmount: '1',
+          endAmount: '1',
+          recipient: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
+        },
+        {
+          itemType: 2,
+          token: '0xA3e62dAa9a071085e44f606cFa5f2480d7e3133a',
+          identifierOrCriteria: '2',
           startAmount: '1',
           endAmount: '1',
           recipient: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
         },
       ],
-      totalOriginalConsiderationItems: 1,
-      salt: '0x0f99ab1d5d6d64ede18bb1c7b7de7527',
+      totalOriginalConsiderationItems: 2,
+      salt: '0xffec368326cae1201c2d2fd8c93dbd65',
       conduitKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
       counter: 0,
     },
     signature:
-      '0xdc9b8dfba3abd8c1e4efe838f88d21c4cf1ac8e8bb29f7e1341533f722372ac36958d67af4612fd957ba7a6900401f6ba769e8b33ffbd6ec4f13e2c911fddc8a',
+      '0x7fbb567068960326fc0698c84de40267ccd9093bc010c89df9a85ab4e09d2526175b54531c8adeca4a2e4477c3485b33325f881ae7bdad0f483d18062dd5486e',
   };
 
   const testSeaportFulfillOrder = async () => {
     const provider = new providers.Web3Provider(window.ethereum as providers.ExternalProvider);
     const seaport = new Seaport(provider as any);
 
-    const offerer = '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852';
     const fulfiller = '0x0035771fDe0FB16a0403eBeF4d5197A727d5DED1';
 
     if (address !== fulfiller) {
@@ -93,11 +100,13 @@ const TestFulfillOrder: NextPage = () => {
     try {
       let transactionHash: string;
 
+      console.log('FULFILLORDER');
       const { executeAllActions } = await seaport.fulfillOrder({
         order: sampleOrder,
         accountAddress: fulfiller, // this gives error because not metamask currently connected
       });
 
+      console.log('EXECUTING');
       const transaction = await executeAllActions();
       console.log('Fulfilled!: ', transaction);
       console.log('Stringify: ', JSON.stringify(transaction));
@@ -120,6 +129,7 @@ const TestFulfillOrder: NextPage = () => {
         >
           FulFill Order
         </button>
+        <p>{JSON.stringify(sampleOrder)}</p>
       </div>
     </>
   );

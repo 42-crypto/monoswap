@@ -46,6 +46,17 @@ export type Item = {
 export type Order = {};
 
 // firestore + seaport data structures
+export type TestItem = {
+  name: string;
+  description: string;
+  imageUrl: string;
+  tokenId: string;
+  contractAddress: string;
+  symbol: string;
+  gameName: string;
+  inputItem: CreateInputItem | ConsiderationInputItem;
+};
+
 export type OfferItem = {
   name: string;
   description: string;

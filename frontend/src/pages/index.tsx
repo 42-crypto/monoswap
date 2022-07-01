@@ -27,6 +27,10 @@ const Home: NextPage = () => {
           <Link href='/orders/testCreateOrder'>
             <a className='text-blue-700'>Test Create Order</a>
           </Link>
+          <Link href='/orders/testFulfillOrder'>
+            <a className='text-blue-700'>Test Fulfill Order</a>
+          </Link>
+
           <ul>
             <li>
               <Link href='#'>
