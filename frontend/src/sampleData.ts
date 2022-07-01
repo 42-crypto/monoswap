@@ -1,5 +1,5 @@
 import { ItemType } from '@opensea/seaport-js/lib/constants';
-import { Item, Order } from '@/types';
+import { Item, Order, Game } from '@/types';
 
 const item1: Item = {
   name: 'Test 1',
@@ -80,6 +80,7 @@ const matic: Item = {
 };
 
 const order1: Order = {
+  id: 1,
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1, item2],
   considerationItems: [item3, matic],
@@ -136,6 +137,7 @@ const order1: Order = {
 };
 
 const order2: Order = {
+  id: 2,
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1],
   considerationItems: [item3, item4, matic],
@@ -193,6 +195,7 @@ const order2: Order = {
 };
 
 const order3: Order = {
+  id: 3,
   offerer: '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852',
   offerItems: [item1],
   considerationItems: [item3],
@@ -233,4 +236,25 @@ const order3: Order = {
   },
 };
 
-export const orders: Order[] = [order1, order2, order3];
+export const sampleOrders: Order[] = [order1, order2, order3];
+
+export const sampleGames: Game[] = [
+  {
+    id: 1,
+    name: 'Test Game',
+    description: 'This is a test game',
+    imageUrl: '',
+  },
+  {
+    id: 2,
+    name: 'Spongebob Game',
+    description: 'This is a test game',
+    imageUrl: '',
+  },
+  {
+    id: 3,
+    name: 'Sexy Hunters',
+    description: 'This is a test game',
+    imageUrl: '',
+  },
+];

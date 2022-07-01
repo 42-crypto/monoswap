@@ -10,9 +10,11 @@ export type User = {
   // ?
 };
 
-// ゲームタイトル
+// ゲーム
 export type Game = {
+  id: number;
   name: string;
+  description: string;
   imageUrl: string;
 };
 
@@ -30,6 +32,7 @@ export type Item = {
 
 // Seaportオーダー
 export type Order = {
+  id: number;
   offerer: string; // Offererのアドレス
   offerItems: Item[];
   considerationItems: Item[];
