@@ -31,7 +31,7 @@ const CreateOrderPage: NextPage = () => {
   const [offerItems, setOfferItems] = useState<Item[]>([]);
   const [considerationItems, setConsiderationItems] = useState<Item[]>([]);
 
-  const [showGive, setShowGive] = useState(true);
+  const [showGive, setShowGive] = useState(false);
   const [showtake, setShowTake] = useState(false);
 
   const addOfferItem = (item: Item) => {

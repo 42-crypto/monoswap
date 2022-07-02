@@ -178,7 +178,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                     {nfts.map((nft: NFT, index: number) => (
                       <div
                         key={index}
-                        className='flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50'
+                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50`}
                         onClick={() => selectNft(nft)}
                       >
                         <div className='glass-modal-inner rounded-[14px] overflow-hidden flex items-center justify-center'>
@@ -194,40 +194,93 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                       </div>
                     ))}
                   </div>
-                  <button
-                    className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
-                    onClick={addNft}
-                  >
-                    Add NFT
-                  </button>
                 </div>
               )}
-              {Object.keys(selected).length !== 0 && (
-                <div className='flex flex-col items-center w-[290px]'>
-                  <div className='flex flex-col items-center space-y-3'>
-                    <p className='text-xl text-white font-bold '>{selected.metadata.name}</p>
-                    <div className='glass-modal-inner rounded-2xl overflow-hidden h-[178px] w-[198px] border border-white/60 flex items-center justify-center'>
-                      <img
-                        src={selected.media[0].gateway}
-                        alt={selected.metadata.name}
-                        className='object-contain h-[160px] w-[160px] p-2'
-                      />
-                    </div>
+              {Object.keys(selected).length !== 0 &&
+                selected.metadata &&
+                selected.metadata.attributes && (
+                  <div className='flex flex-col items-center w-[290px] space-y-4'>
+                    <div className='flex flex-col items-center space-y-3'>
+                      <p className='text-xl text-white font-bold '>{selected.metadata.name}</p>
+                      <div className='glass-modal-inner rounded-2xl overflow-hidden h-[178px] w-[198px] border border-white/60 flex items-center justify-center'>
+                        <img
+                          src={selected.media[0].gateway}
+                          alt={selected.metadata.name}
+                          className='object-contain h-[160px] w-[160px] p-2'
+                        />
+                      </div>
 
-                    <div className='flex justify-center space-x-1'>
-                      <div>
-                        <p className=' text-[#CBC6D2] text-base'>Owned by </p>
-                      </div>
-                      <div>
-                        <a suppressHydrationWarning={true} className='text-[#24D6DD] text-base'>
-                          {address ? address.substring(2, 8) : '89678'}
-                        </a>
+                      <div className='flex justify-center space-x-1'>
+                        <div>
+                          <p className=' text-[#CBC6D2] text-base'>Owned by </p>
+                        </div>
+                        <div>
+                          <a suppressHydrationWarning={true} className='text-[#24D6DD] text-base'>
+                            {address ? address.substring(2, 8) : '89678'}
+                          </a>
+                        </div>
                       </div>
                     </div>
+                    <div className='flex flex-col space-y-4 bg-transparent rounded-2xl border border-white/40 w-full pt-4 px-4'>
+                      <div className='flex flex-col w-full space-y-3'>
+                        <div className='flex justify-between'>
+                          <p className='text-base font-bold text-white'>Description</p>
+                          <div className='h-6 w-6 flex items-center justify-between'>
+                            <img className='w-3' src='/arrow_up.png' alt='arrow_up' />
+                          </div>
+                        </div>
+                        <div>
+                          <p className='text-base text-white'>{selected.metadata.description}</p>
+                        </div>
+                      </div>
+                      <div className='flex flex-col w-full space-y-3 border-t border-white/40 pt-4'>
+                        <div className='flex justify-between'>
+                          <p className='text-base font-bold text-white'>Properties</p>
+                          <div className='h-6 w-6 flex items-center justify-between'>
+                            <img className='w-3' src='/arrow_up.png' alt='arrow_up' />
+                          </div>
+                        </div>
+                        <div>
+                          <div className='grid grid-cols-2 gap-3'>
+                            {selected.metadata.attributes.map((attribute, index) => (
+                              <div
+                                key={index}
+                                className='border border-[#24D6DD] rounded-md p-2 flex flex-col items-center space-y-1'
+                              >
+                                <p className='text-[12px] text-[#24D6DD]'>{attribute.trait_type}</p>
+                                <p className='text-[14px] font-bold text-white'>
+                                  {attribute.value}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className='flex flex-col w-full space-y-3 border-t border-white/40 pt-4'>
+                        <div className='flex justify-between'>
+                          <p className='text-base font-bold text-white'>About</p>
+                          <div className='h-6 w-6 flex items-center justify-between'>
+                            <img className='w-3' src='/arrow_up.png' alt='arrow_up' />
+                          </div>
+                        </div>
+                      </div>
+                      <div className='flex flex-col w-full space-y-3 border-t border-white/40 pt-4 pb-8'>
+                        <div className='flex justify-between'>
+                          <p className='text-base font-bold text-white'>Details</p>
+                          <div className='h-6 w-6 flex items-center justify-between'>
+                            <img className='w-3' src='/arrow_up.png' alt='arrown_down' />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      className='bg-primary text-white text-base font-bold w-full py-2 px-4 mt-[28px] rounded-2xl'
+                      onClick={addNft}
+                    >
+                      Add NFT
+                    </button>
                   </div>
-                  <div></div>
-                </div>
-              )}
+                )}
             </div>
           </div>
         </div>
