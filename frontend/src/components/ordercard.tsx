@@ -11,7 +11,7 @@ const OrderCard = (
   return (
 
     <div className='bg-white'>
-      <ul className= 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-10'>
+      <ul className= 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-10 aspect-square'>
         <li className= ''>
           <ul className= 'justify-evenly gap-10'>
             {
