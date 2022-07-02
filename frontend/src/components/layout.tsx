@@ -8,8 +8,10 @@ type Props = {
   title?: string;
 };
 
+//  <div className='bg-white mx-auto px-10 pb-4'>
+
 const Layout = ({ children, title = 'Monoswap' }: Props) => (
-  <div className='mx-auto px-10 pb-4'>
+  <div className=''>
     <Head>
       <title>{title}</title>
       <link rel='icon' href='/favicon.ico' />
@@ -30,7 +32,7 @@ const Layout = ({ children, title = 'Monoswap' }: Props) => (
     {/* <style jsx global>{``}</style> */}
     <Header />
     <main>{children}</main>
-    <Footer />
+    {/* <Footer /> */}
   </div>
 );
 

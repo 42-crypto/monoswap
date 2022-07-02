@@ -11,6 +11,9 @@ module.exports = {
         background: '#1D093D',
       },
     },
+    fontSize: {
+      h3: '2rem',
+    },
   },
   plugins: [],
 };
