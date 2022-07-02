@@ -1,4 +1,5 @@
 import { createAlchemyWeb3 } from '@alch/alchemy-web3';
+
 import { Seaport } from '@opensea/seaport-js';
 import { ItemType } from '@opensea/seaport-js/lib/constants';
 // import { CreateInputItem } from '@opensea/seaport-js/lib/types';
@@ -97,36 +98,244 @@ const matic: Item = {
   },
 };
 
-const CreateOrderPage: NextPage = () => {
-  // change to {}
-  const { address } = useAccount();
+interface NFT {
+  title: string;
+  id: {
+    tokenId: string;
+  };
+  tokenUri: {
+    gateway: string;
+    raw: string;
+  };
+  contract: {
+    address: string;
+  };
+  metadata: {
+    name: string;
+    description: string;
+    image: string;
+    attrbiutes: [
+      {
+        trait_type: string;
+        value: string;
+      },
+    ];
+  };
+  description: string;
+  media: [
+    {
+      raw: string;
+      gateway: string;
+    },
+  ];
+}
 
-  const [offerItems, setOfferItems] = useState<Item[]>([item1]);
-  const [considerationItems, setConsiderationItems] = useState<Item[]>([item3]);
+const NFTCard = ({ nft }: { nft: NFT }) => {
+  return (
+    <div className='w-1/4 flex flex-col '>
+      <div className='rounded-md'>
+        <img className='object-cover h-128 w-full rounded-t-md' src={nft.media[0].gateway}></img>
+      </div>
+      <div className='flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 '>
+        <div className=''>
+          <h2 className='text-xl text-gray-800'>{nft.title}</h2>
+          <p className='text-gray-600'>Id: {nft.id.tokenId}</p>
+          <p className='text-gray-600'>{`${nft.contract.address}`}</p>
+        </div>
+
+        <div className='flex-grow mt-2'>
+          <p className='text-gray-600'>{nft.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SelectGive = ({ addSelectedItem }) => {
+  const { address, isConnecting, isDisconnected } = useAccount();
+  console.log('account address: ', address);
+  const [nfts, setNfts] = useState<any>([]);
+  const [selected, setSelected] = useState<any>({});
 
   // Get NFTs
   const web3 = createAlchemyWeb3(
     'https://polygon-mumbai.g.alchemy.com/v2/LCmydbgvaVeJSe-TUIpDkU75E14J4G_W',
   );
 
-  // const [nfts, setNfts] = useState([]);
   useEffect(() => {
     if (!address) return;
     const getNfts = async () => {
       const nfts = await web3.alchemy.getNfts({ owner: address });
       console.log(nfts);
 
-      // setNfts
+      if (nfts) {
+        const numNfts = nfts.totalCount;
+        const nftList = nfts.ownedNfts;
+
+        console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
+        setNfts(nftList);
+      }
     };
     getNfts();
   }, []);
 
+  const selectNft = (nft: NFT) => {
+    setSelected(nft);
+    console.log('nft', selected);
+  };
+
+  const addNft = () => {
+    console.log('addNft');
+    if (!selected) {
+      console.log('None selected');
+      return;
+    }
+
+    const item: Item = {
+      name: selected.metadata.name,
+      description: selected.metadata.description,
+      imageUrl: selected.media[0].gateway,
+      tokenId: selected.id.tokenId,
+      contractAddress: selected.contract.address,
+      symbol: '',
+      game: '',
+      inputItem: {
+        itemType: ItemType.ERC721,
+        token: selected.contract.address,
+        identifier: selected.id.tokenId,
+      },
+    };
+
+    addSelectedItem(item);
+  };
+
+  return (
+    <div>
+      <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Select Give</h2>
+      {!nfts && (
+        <>
+          <div>Loading...</div>
+        </>
+      )}
+      {nfts && (
+        <>
+          <p>My NFTs</p>
+          {nfts.map((nft: NFT, index: number) => (
+            <div key={index} className='' onClick={() => selectNft(nft)}>
+              <img className='object-cover h-16 w-16 rounded-t-md' src={nft.media[0].gateway}></img>
+              <h2 className='text-xl text-gray-800'>{nft.title}</h2>
+              <p className='text-xs'>ContractAddress: {nft.contract.address}</p>
+              <p className='text-xs'>metadata.name: {nft.metadata.name}</p>
+              <p className='text-xs'>metadata.description: {nft.metadata.description}</p>
+              <p className='text-xs'>metadata.image: {nft.metadata.image}</p>
+            </div>
+          ))}
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
+            onClick={addNft}
+          >
+            Add NFT
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+const SelectTake = ({ addSelectedItem }) => {
+  const testAddress = '0x4c6fd3d91dEDB234f711DDa33B059Eb928562a97';
+  console.log('testAddress: ', testAddress);
+  const [nfts, setNfts] = useState<any>([]);
+  const [selected, setSelected] = useState<any>({});
+
+  // Get NFTs
+  const web3 = createAlchemyWeb3(
+    'https://polygon-mumbai.g.alchemy.com/v2/LCmydbgvaVeJSe-TUIpDkU75E14J4G_W',
+  );
+
+  useEffect(() => {
+    if (!testAddress) return;
+    const getNfts = async () => {
+      const nfts = await web3.alchemy.getNfts({ owner: testAddress });
+      console.log(nfts);
+
+      if (nfts) {
+        const numNfts = nfts.totalCount;
+        const nftList = nfts.ownedNfts;
+
+        console.log(`Total NFTs owned by ${testAddress}: ${numNfts} \n`);
+        setNfts(nftList);
+      }
+    };
+    getNfts();
+  }, []);
+
+  const selectNft = (nft: NFT) => {
+    setSelected(nft);
+    console.log('nft', selected);
+  };
+
+  const addNft = () => {};
+
+  return (
+    <div>
+      <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Select Take</h2>
+      {!nfts && (
+        <>
+          <div>Loading...</div>
+        </>
+      )}
+      {nfts && (
+        <>
+          <p>All Game NFTs</p>
+          {nfts.map((nft: NFT, index: number) => (
+            <div key={index} className='' onClick={() => selectNft(nft)}>
+              <img className='object-cover h-16 w-16 rounded-t-md' src={nft.media[0].gateway}></img>
+              <h2 className='text-xl text-gray-800'>{nft.title}</h2>
+              <p className='text-xs'>ContractAddress: {nft.contract.address}</p>
+              <p className='text-xs'>metadata.name: {nft.metadata.name}</p>
+              <p className='text-xs'>metadata.description: {nft.metadata.description}</p>
+              <p className='text-xs'>metadata.image: {nft.metadata.image}</p>
+            </div>
+          ))}
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
+            onClick={addNft}
+          >
+            Add NFT
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+const CreateOrderPage: NextPage = () => {
+  const { address, isConnecting, isDisconnected } = useAccount();
+  console.log('account address: ', address);
+
+  const [offerItems, setOfferItems] = useState<Item[]>([]);
+  const [considerationItems, setConsiderationItems] = useState<Item[]>([]);
+
+  const addOfferItem = (item: Item) => {
+    console.log('adding offer item...');
+    const updatedOfferItems = [...offerItems, item];
+    setOfferItems(updatedOfferItems);
+  };
+
+  const addConsiderationItem = (item: Item) => {
+    console.log('adding consideration item...');
+    const updatedConsiderationItems = [...considerationItems, item];
+    setConsiderationItems(updatedConsiderationItems);
+  };
+
   const createOrder = async () => {
-    // if (!account) throw Error;
+    const offerer = address;
+    console.log('offerer: ', offerer);
+
+    return;
     const provider = new providers.Web3Provider(window.ethereum as providers.ExternalProvider);
     const seaport = new Seaport(provider as any);
-
-    const offerer = '0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852';
 
     const createOrderInput: CreateOrderInput = {
       offer: offerItems.map((item) => item.inputItem),
@@ -147,78 +356,30 @@ const CreateOrderPage: NextPage = () => {
 
   return (
     <>
-      <h1 className='font-semibold text-2xl'>Sample Create Order Page</h1>
-      <div className='bg-white'>
-        <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8'>
-          <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give</h2>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
-            {offerItems.map((item) => (
-              <div key={item.name} className='group relative'>
-                <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className='w-full h-full object-center object-cover lg:w-full lg:h-full'
-                  />
-                </div>
-                <div className='mt-4 flex justify-between'>
-                  <div>
-                    <h3 className='text-sm text-gray-700'>
-                      <a href={item.name}>
-                        <span aria-hidden='true' className='absolute inset-0' />
-                        {item.name}
-                      </a>
-                    </h3>
-                  </div>
-                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
-                </div>
-              </div>
-            ))}
-            <div className='group relative'>
-              <button type='button' data-bs-toggle='modal' data-bs-target='#newItemModal'>
-                +
-              </button>
-              <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'></div>
-            </div>
+      <h1 className='font-semibold text-2xl'>Create Order</h1>
+      <div>
+        <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give</h2>
+        {offerItems.map((item, index) => (
+          <div key={index} className=''>
+            <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
+            <p className='text-sm font-medium text-gray-900'>{item.name}</p>
           </div>
-        </div>
+        ))}
       </div>
-
       <br />
-      <div className='bg-white'>
-        <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8'>
-          <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Take</h2>
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
-            {considerationItems.map((item) => (
-              <div key={item.name} className='group relative'>
-                <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className='w-full h-full object-center object-cover lg:w-full lg:h-full'
-                  />
-                </div>
-                <div className='mt-4 flex justify-between'>
-                  <div>
-                    <h3 className='text-sm text-gray-700'>
-                      <a href={item.name}>
-                        <span aria-hidden='true' className='absolute inset-0' />
-                        {item.name}
-                      </a>
-                    </h3>
-                  </div>
-                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
-                </div>
-              </div>
-            ))}
-            <div className='group relative'>
-              <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
-                <button>+</button>
-              </div>
-            </div>
+      <div>
+        <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Take</h2>
+        {considerationItems.map((item, index) => (
+          <div key={index} className=''>
+            <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
+            <p className='text-sm font-medium text-gray-900'>{item.name}</p>
           </div>
-        </div>
+        ))}
       </div>
+      <br />
+      <SelectGive addSelectedItem={addOfferItem} />
+      <SelectTake addSelectedItem={addConsiderationItem} />
+      <br />
       <button
         className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
         onClick={createOrder}

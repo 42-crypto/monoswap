@@ -16,6 +16,7 @@ export type Game = {
   name: string;
   description: string;
   imageUrl: string;
+  contractAddress: string;
 };
 
 // OfferやConsiderationに入れるERC721, ERC20, Native Token (atic)など

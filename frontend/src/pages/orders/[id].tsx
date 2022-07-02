@@ -43,6 +43,7 @@ const OrderPage = () => {
 
     console.log('fulfiller: ', fulfiller);
     console.log('order: ', data.order);
+
     // 3. Fulfill order
     try {
       let transactionHash: string;
