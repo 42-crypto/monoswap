@@ -33,9 +33,11 @@ export type Item = {
 // Seaportオーダー
 export type Order = {
   id: string;
+  createdAt: Date;
+  fulfilled: boolean;
+  // cancelled: boolean;
   offerer: string; // Offererのアドレス
   offerItems: Item[];
   considerationItems: Item[];
   order: OrderWithCounter; // SeaportのcreateOfferが成功した時返されるオブジェクト。FulFillのときに必要
-  createdAt: Date;
 };
