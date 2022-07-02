@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Layout = ({ children, title = 'Monoswap' }: Props) => (
-  <div className='mx-auto px-10 pb-4'>
+  <div className='mx-auto px-10 pb-4 bg-background'>
     <Head>
       <title>{title}</title>
       <link rel='icon' href='/favicon.ico' />

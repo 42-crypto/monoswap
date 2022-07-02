@@ -4,15 +4,21 @@ const OrderCard = (
   offerItems: Item[] ,
   considerationItems: Item[] 
 ) => {
+
+  const offerItemsToDisplay = (offerItems.length > 3) ? offerItems.slice(0, 3) : offerItems
+  const considerationItemsToDisplay = (considerationItems.length > 3) ? considerationItems.slice(0, 3) : considerationItems
+
   return (
-    <div>
-      <ul className= 'bg-primary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-10'>
+
+    <div className='bg-white'>
+      <ul className= 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-10'>
         <li className= ''>
-          <ul className= 'bg-primary justify-evenly gap-10'>
+          <ul className= 'justify-evenly gap-10'>
             {
-             offerItems.map((item) => (
+             
+             offerItemsToDisplay.map((item) => (
               <li key={item.name} className=''>
-                <img src= {item.imageUrl} />
+                <img className = 'height-auto'src= {item.imageUrl} />
               </li>
               ))
             }
@@ -22,11 +28,11 @@ const OrderCard = (
           <img className="h-8 w-auto sm:h-10" src="/swap.svg" alt=""/>
         </li>
         <li className= ''>
-          <ul className= 'bg-primary justify-evenly gap-10'>
+          <ul className= 'justify-evenly gap-10'>
             {
-              considerationItems.map((item) => (
+              considerationItemsToDisplay.map((item) => (
               <li key={item.name} className=''>
-                <img src= {item.imageUrl} />
+                <img className = 'w-full height-auto'src= {item.imageUrl} />
               </li>
               ))
             }
