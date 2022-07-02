@@ -49,7 +49,7 @@ const IndexPage: NextPage = () => {
             <ul className= 'items'>
               {orderData.map(order => (
                 <>
-                  <li key={order.id} className='item'>
+                  <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl'>
                     <Link href={`/orders/${order.id}`}>
                       {OrderCard(
                         order.offerItems,
@@ -76,7 +76,10 @@ const IndexPage: NextPage = () => {
           .item {
             width: 308px;
             height: 308px;
-            background: white;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						gap: 28px;
           }
         `}
       </style>
