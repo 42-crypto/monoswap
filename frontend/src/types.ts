@@ -16,6 +16,7 @@ export type Game = {
   name: string;
   description: string;
   imageUrl: string;
+  contractAddress: string;
 };
 
 // OfferやConsiderationに入れるERC721, ERC20, Native Token (atic)など
@@ -33,9 +34,11 @@ export type Item = {
 // Seaportオーダー
 export type Order = {
   id: string;
+  createdAt: Date;
+  fulfilled: boolean;
+  // cancelled: boolean;
   offerer: string; // Offererのアドレス
   offerItems: Item[];
   considerationItems: Item[];
   order: OrderWithCounter; // SeaportのcreateOfferが成功した時返されるオブジェクト。FulFillのときに必要
-  createdAt: Date;
 };

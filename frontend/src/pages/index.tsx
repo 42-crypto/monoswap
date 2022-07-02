@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { useCollection } from 'swr-firestore-v9'
+import { useCollection } from 'swr-firestore-v9';
 
 import Layout from '@/components/layout';
 import OrderCard from '@/components/ordercard';
@@ -16,7 +16,7 @@ import { Order, Game } from '@/types';
 const IndexPage: NextPage = () => {
   // Fetch games data
   //const { data: gameData, error: gameError } = useSWR('/api/games', fetcher);
-  const { data: gameData, error: gameError } = useCollection('games')
+  const { data: gameData, error: gameError } = useCollection('games');
   // if (gameError) return <div>Failed to load</div>;
   // if (!gameData) return <div>Loading...</div>;
 
@@ -26,12 +26,12 @@ const IndexPage: NextPage = () => {
   return (
     <Layout>
       <div className=''>
-        <Link href='/orders/sampleCreateOrder'>
-          <a className='text-blue-700'>Sample Create Order</a>
+        <Link href='/orders/create'>
+          <a className='text-blue-700'>Create Order</a>
         </Link>
-        <Link href='/orders/sampleFulfillOrder'>
+        {/* <Link href='/orders/sampleFulfillOrder'>
           <a className='text-blue-700'>Sample Fulfill Order</a>
-        </Link>
+        </Link> */}
 
         <h2 className='font-semibold text-2xl'>Game List</h2>
         {gameError && (
@@ -47,7 +47,7 @@ const IndexPage: NextPage = () => {
         {gameData && (
           <>
             <ul className=''>
-              {gameData.map(game => (
+              {gameData.map((game) => (
                 <>
                   <li key={game.id} className=''>
                     <div>
@@ -77,6 +77,7 @@ const IndexPage: NextPage = () => {
           <>
             <ul className= 'mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
               {orderData.map(order => (
+
                 <>
                   <li key={order.id} className=''>
                     <a href= 'orders/{order.id}'>

@@ -11,6 +11,8 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
+    "@alch/alchemy-sdk": "^1.0.6",
+    "@alch/alchemy-web3": "^1.4.4",
     "@opensea/seaport-js": "^1.0.2",
     "@rainbow-me/rainbowkit": "^0.4.1",
     "dotenv": "^16.0.1",
