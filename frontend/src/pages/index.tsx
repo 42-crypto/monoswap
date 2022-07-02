@@ -23,6 +23,8 @@ const IndexPage: NextPage = () => {
   // Fetch orders data
   const { data: orderData, error: orderError } = useCollection('orders');
 
+  const orderExeptFullfilled = orderData ? orderData.filter(order => order.fulfilled == false) : [];
+
   return (
     <Layout>
       <div className='bg-background flex flex-direction: row'>
