@@ -13,6 +13,7 @@ import {
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -29,6 +30,9 @@ const CreateOrderPage: NextPage = () => {
 
   const [offerItems, setOfferItems] = useState<Item[]>([]);
   const [considerationItems, setConsiderationItems] = useState<Item[]>([]);
+
+  const [showGive, setShowGive] = useState(true);
+  const [showtake, setShowTake] = useState(false);
 
   const addOfferItem = (item: Item) => {
     console.log('adding offer item...');
@@ -95,19 +99,22 @@ const CreateOrderPage: NextPage = () => {
                   {offerItems.map((item, index) => (
                     <div
                       key={index}
-                      className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
                     >
                       <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                     </div>
                   ))}
-                  <div className='flex items-center justify-center glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+                  <div
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    onClick={() => (showGive ? setShowGive(false) : setShowGive(true))}
+                  >
                     <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />
                   </div>
                   {offerItems.length < 9 - 1 &&
                     [...Array(9 - 1 - offerItems.length)].map((e, i) => (
                       <div
                         key={i}
-                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                       ></div>
                     ))}
                 </div>
@@ -143,15 +150,18 @@ const CreateOrderPage: NextPage = () => {
             </div>
           </div>
           <div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
               onClick={createOrder}
             >
               Create Order
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
+      <SelectGive showGive={showGive} setShowGive={setShowGive} addSelectedItem={addOfferItem} />
     </Layout>
   );
 };

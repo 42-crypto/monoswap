@@ -83,7 +83,7 @@ const OrderPage: NextPage = () => {
                     {data.offerItems.map((item, index) => (
                       <div
                         key={index}
-                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
                       >
                         <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                       </div>
@@ -92,7 +92,7 @@ const OrderPage: NextPage = () => {
                       [...Array(9 - data.offerItems.length)].map((e, i) => (
                         <div
                           key={i}
-                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                         ></div>
                       ))}
                   </div>
@@ -108,7 +108,7 @@ const OrderPage: NextPage = () => {
                     {data.considerationItems.map((item, index) => (
                       <div
                         key={index}
-                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
                       >
                         <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                       </div>
@@ -117,7 +117,7 @@ const OrderPage: NextPage = () => {
                       [...Array(9 - data.considerationItems.length)].map((e, i) => (
                         <div
                           key={i}
-                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                         ></div>
                       ))}
                   </div>
