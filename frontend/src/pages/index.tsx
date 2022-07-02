@@ -26,13 +26,6 @@ const IndexPage: NextPage = () => {
   return (
     <Layout>
       <div className=''>
-        <Link href='/orders/create'>
-          <a className='text-blue-700'>Create Order</a>
-        </Link>
-        {/* <Link href='/orders/sampleFulfillOrder'>
-          <a className='text-blue-700'>Sample Fulfill Order</a>
-        </Link> */}
-
         <h2 className='font-semibold text-2xl'>Game List</h2>
         {gameError && (
           <>
@@ -77,12 +70,14 @@ const IndexPage: NextPage = () => {
           <>
             <ul className= 'mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
               {orderData.map(order => (
-
                 <>
                   <li key={order.id} className=''>
-                    <a href= 'orders/{order.id}'>
-                      {OrderCard()}
-                    </a>
+                    <Link href={`/orders/${order.id}`}>
+                      {OrderCard(
+                        order.offerItems,
+                        order.considerationItems
+                      )}
+                    </Link>
                   </li>
                 </>
               ))}
