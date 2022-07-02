@@ -2,8 +2,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
+import Router from 'next/router'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -110,9 +109,7 @@ const Header: NextPage = () => {
   };
 
   const didTapCreateOrder = async () => {
-    console.log('will create doc');
-    await addDoc(collection(firebaseFirestore, 'orders'), order1);
-    console.log('create doc');
+    Router.push('/orders/create')
   };
 
   const didTapOrderList = async () => {
@@ -163,7 +160,7 @@ const Header: NextPage = () => {
             didTapOrderList,
             didTapCreateOrder,
             () => connect({ connector }),
-            'CONNECT',
+            'Connect',
           );
         })}
       </div>
