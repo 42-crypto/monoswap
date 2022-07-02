@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className=''>
+    <footer className='absolute bottom-10 w-full w-[calc(100%_-_5rem)]'>
       <hr />
       <span>（フッター）</span>
       <ul className=''>

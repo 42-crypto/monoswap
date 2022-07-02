@@ -27,53 +27,31 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout>
-      <div className=''>
-        <h2 className='font-semibold text-2xl'>Game List</h2>
-        {gameError && (
-          <>
-            <div>Failed to load</div>
-          </>
-        )}
-        {!gameError && !gameData && (
-          <>
-            <div>Loading...</div>
-          </>
-        )}
-        {gameData && (
-          <>
-            <ul className=''>
-              {gameData.map((game) => (
-                <>
-                  <li key={game.id} className=''>
-                    <div>
-                      <p>name: {game.name}</p>
-                      <p>description: {game.description}</p>
-                      <p>imageUrl: {game.imageUrl}</p>
-                    </div>
-                  </li>
-                </>
-              ))}
-            </ul>
-          </>
-        )}
+      <div className='bg-background flex flex-direction: row'>
+        { gameData && (
+            <aside className="w-4/12" aria-label="Sidebar">
+              <h5 className='font-semibold text-2xl text-white'>Game List</h5>
+              <div className="overflow-y-auto py-4 px-3 bg-background rounded ">
+                  <ul className="space-y-2">
+                    {gameData.map((game) => (
+                      <li key={game.name} className=''>
+                        <a href="#" className="flex items-center p-2 text-base font-semibold rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">                            <img className = 'w-10 h-w height-auto object-fit-cover' src= {game.imageUrl} />
+                            <span className="ml-3">{game.name}</span>
+                          </a>
+                      </li>
+                      ))}
+                   </ul>
+              </div>
+            </aside>
+          )
+        }
 
-        <h2 className='font-semibold text-2xl'>Order List</h2>
-        {orderError && (
-          <>
-            <div>Failed to load</div>
-          </>
-        )}
-        {!orderError && !orderData && (
-          <>
-            <div>Loading...</div>
-          </>
-        )}
         {orderData && (
-          <>
-            <ul className= 'mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
-              {orderExeptFullfilled.map(order => (
+          <div className="w-full">
+            <ul className= 'items'>
+              {orderData.map(order => (
                 <>
-                  <li key={order.id} className=''>
+                  <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl'>
                     <Link href={`/orders/${order.id}`}>
                       {OrderCard(
                         order.offerItems,
@@ -84,9 +62,29 @@ const IndexPage: NextPage = () => {
                 </>
               ))}
             </ul>
-          </>
+            <></>
+          </div>
         )}
       </div>
+      <style jsx>
+        {`
+          .items {
+            display: flex;
+            flex-direction : row;
+            width: 100%;
+            gap: 20px;
+            flex-wrap: wrap;
+          }
+          .item {
+            width: 308px;
+            height: 308px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						gap: 28px;
+          }
+        `}
+      </style>
     </Layout>
   );
 };
