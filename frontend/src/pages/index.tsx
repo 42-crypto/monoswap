@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { useCollection } from 'swr-firestore-v9';
 
 import Layout from '@/components/layout';
 import { fetcher } from '@/fetch/fetcher';
@@ -12,12 +13,13 @@ import { Order, Game } from '@/types';
 
 const IndexPage: NextPage = () => {
   // Fetch games data
-  const { data: gameData, error: gameError } = useSWR('/api/games', fetcher);
+  //const { data: gameData, error: gameError } = useSWR('/api/games', fetcher);
+  const { data: gameData, error: gameError } = useCollection('games');
   // if (gameError) return <div>Failed to load</div>;
   // if (!gameData) return <div>Loading...</div>;
 
   // Fetch orders data
-  const { data: orderData, error: orderError } = useSWR('/api/orders', fetcher);
+  const { data: orderData, error: orderError } = useCollection('orders');
 
   return (
     <Layout>
@@ -43,7 +45,7 @@ const IndexPage: NextPage = () => {
         {gameData && (
           <>
             <ul className=''>
-              {gameData.games.map((game: Game) => (
+              {gameData.map((game) => (
                 <>
                   <li key={game.id} className=''>
                     <div>
@@ -72,7 +74,7 @@ const IndexPage: NextPage = () => {
         {orderData && (
           <>
             <ul className=''>
-              {orderData.orders.map((order: Order) => (
+              {orderData.map((order) => (
                 <>
                   <li key={order.id} className=''>
                     <div>

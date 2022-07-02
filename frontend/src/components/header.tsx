@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/named
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -19,6 +19,7 @@ import {
 
 // eslint-disable-next-line import/no-unresolved
 import Navbar from '@/components/navbar';
+import { order1 } from '@/sampleData';
 import { firebaseApp, firebaseAuth, firebaseFirestore } from '@/utils/firebase';
 
 const Header: NextPage = () => {
@@ -110,11 +111,7 @@ const Header: NextPage = () => {
 
   const didTapCreateOrder = async () => {
     console.log('will create doc');
-    await setDoc(doc(firebaseFirestore, 'cities', 'LAbcd'), {
-      name: 'Los Angeles',
-      state: 'CA',
-      country: 'USA',
-    });
+    await addDoc(collection(firebaseFirestore, 'orders'), order1);
     console.log('create doc');
   };
 

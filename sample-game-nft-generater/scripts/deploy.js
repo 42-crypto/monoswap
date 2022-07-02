@@ -31,7 +31,7 @@ const main = async () => {
   thirdAddressToSend = "" // 3人目のテストユーザーのアドレスを入れる
   uriArrayForSecondAddress = ["https://jsonkeeper.com/b/65V7","https://jsonkeeper.com/b/V3NC"]; // 3人目のテストユーザーにmintするNFTのjsonのuri配列を入れる
   for (const uri of  uriArrayForSecondAddress) {
-    let txn = await domainContract.connect(owner).makeNFT(thirdAddressToSend = "",uri);
+    let txn = await domainContract.connect(owner).makeNFT(thirdAddressToSend,uri);
     await txn.wait();
     console.log("Minted NFT number:",number);
     number += 1;
