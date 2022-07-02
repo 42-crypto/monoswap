@@ -121,7 +121,7 @@ const CreateOrderPage: NextPage = () => {
     getNfts();
   }, []);
 
-  const testSeaportCreateOrder = async () => {
+  const createOrder = async () => {
     // if (!account) throw Error;
     const provider = new providers.Web3Provider(window.ethereum as providers.ExternalProvider);
     const seaport = new Seaport(provider as any);
@@ -131,15 +131,12 @@ const CreateOrderPage: NextPage = () => {
     const createOrderInput: CreateOrderInput = {
       offer: offerItems.map((item) => item.inputItem),
       consideration: considerationItems.map((item) => item.inputItem),
-      // fees:
     };
 
     console.log('createOrderInput: ', createOrderInput);
-
     console.log('CREATING ORDER');
     // 1. Do a sample order
     const { executeAllActions } = await seaport?.createOrder(createOrderInput, offerer);
-
     const order: OrderWithCounter = await executeAllActions();
 
     // 2. Save order data
@@ -151,38 +148,80 @@ const CreateOrderPage: NextPage = () => {
   return (
     <>
       <h1 className='font-semibold text-2xl'>Sample Create Order Page</h1>
-      <h2 className='text-4xl'>Give</h2>
-      <div>
-        <ul className=''>
-          {offerItems.map((item: Item) => (
-            <>
-              <li key={item.name} className=''>
-                <div className=''>
-                  <img className='object-cover h-24 w-24' alt={item.name} src={item.imageUrl} />
-                  <p>{item.name}</p>
+      <div className='bg-white'>
+        <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8'>
+          <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give</h2>
+          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
+            {offerItems.map((item) => (
+              <div key={item.name} className='group relative'>
+                <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className='w-full h-full object-center object-cover lg:w-full lg:h-full'
+                  />
                 </div>
-              </li>
-            </>
-          ))}
-        </ul>
-        <button>+</button>
-        <br />
-        <h2 className='text-4xl'>Take</h2>
-        <ul className=''>
-          {considerationItems.map((item) => (
-            <li key={item.name} className=''>
-              <div className=''>
-                <img className='object-cover h-24 w-24' alt={item.name} src={item.imageUrl} />
-                <p>{item.name}</p>
+                <div className='mt-4 flex justify-between'>
+                  <div>
+                    <h3 className='text-sm text-gray-700'>
+                      <a href={item.name}>
+                        <span aria-hidden='true' className='absolute inset-0' />
+                        {item.name}
+                      </a>
+                    </h3>
+                  </div>
+                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
-        <button>+</button>
+            ))}
+            <div className='group relative'>
+              <button type='button' data-bs-toggle='modal' data-bs-target='#newItemModal'>
+                +
+              </button>
+              <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <div className='bg-white'>
+        <div className='max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8'>
+          <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Take</h2>
+          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
+            {considerationItems.map((item) => (
+              <div key={item.name} className='group relative'>
+                <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className='w-full h-full object-center object-cover lg:w-full lg:h-full'
+                  />
+                </div>
+                <div className='mt-4 flex justify-between'>
+                  <div>
+                    <h3 className='text-sm text-gray-700'>
+                      <a href={item.name}>
+                        <span aria-hidden='true' className='absolute inset-0' />
+                        {item.name}
+                      </a>
+                    </h3>
+                  </div>
+                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+                </div>
+              </div>
+            ))}
+            <div className='group relative'>
+              <div className='w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none'>
+                <button>+</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <button
         className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
-        onClick={testSeaportCreateOrder}
+        onClick={createOrder}
       >
         Create Order
       </button>
