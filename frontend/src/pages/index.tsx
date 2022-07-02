@@ -38,7 +38,7 @@ const IndexPage: NextPage = () => {
         }
 
         {orderData && (
-          <div className="w-full" style={{marginTop: "60px"}}>
+          <div className="w-full" >
             <ul className= 'items justify-center justify-around' style={{ justifyContent: "start" }}>
               {orderData.map(order => (
                 <>
