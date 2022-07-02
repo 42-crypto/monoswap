@@ -84,6 +84,14 @@ const CreateOrderPage: NextPage = () => {
 
   return (
     <>
+      <div className='bg-slate-100 h-96 w-96 p-10'>
+        <div className='grid grid-cols-3 grid-rows-3 gap-4'>
+          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
+          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
+          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
+          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
+        </div>
+      </div>
       <h1 className='font-semibold text-2xl'>Create Order</h1>
       <div>
         <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give</h2>
