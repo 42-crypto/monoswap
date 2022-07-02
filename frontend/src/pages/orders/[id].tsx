@@ -12,6 +12,7 @@ import {
 
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -20,6 +21,7 @@ import { useAccount } from 'wagmi';
 import Layout from '@/components/layout';
 import { fetcher } from '@/fetch/fetcher';
 import { Item, Order } from '@/types';
+import { firebaseApp, firebaseAuth, firebaseFirestore, firestoreAutoId } from '@/utils/firebase';
 
 const OrderPage = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
@@ -61,6 +63,11 @@ const OrderPage = () => {
 
       transactionHash = transaction.hash;
       console.log('transactionHash: ', transactionHash);
+
+      console.log('Updating doc...');
+      data.fulfilled = true;
+      await setDoc(doc(firebaseFirestore, 'orders', data.id), data);
+      console.log('Document updated');
     } catch (err) {
       console.log(err);
     }

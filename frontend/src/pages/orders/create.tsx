@@ -15,11 +15,13 @@ import {
 
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import { Item } from '@/types';
+import { Item, Order } from '@/types';
+import { firebaseApp, firebaseAuth, firebaseFirestore, firestoreAutoId } from '@/utils/firebase';
 
 const item1: Item = {
   name: 'Test 1',
@@ -131,27 +133,6 @@ interface NFT {
   ];
 }
 
-const NFTCard = ({ nft }: { nft: NFT }) => {
-  return (
-    <div className='w-1/4 flex flex-col '>
-      <div className='rounded-md'>
-        <img className='object-cover h-128 w-full rounded-t-md' src={nft.media[0].gateway}></img>
-      </div>
-      <div className='flex flex-col y-gap-2 px-2 py-3 bg-slate-100 rounded-b-md h-110 '>
-        <div className=''>
-          <h2 className='text-xl text-gray-800'>{nft.title}</h2>
-          <p className='text-gray-600'>Id: {nft.id.tokenId}</p>
-          <p className='text-gray-600'>{`${nft.contract.address}`}</p>
-        </div>
-
-        <div className='flex-grow mt-2'>
-          <p className='text-gray-600'>{nft.description}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const SelectGive = ({ addSelectedItem }) => {
   const { address, isConnecting, isDisconnected } = useAccount();
   console.log('account address: ', address);
@@ -251,7 +232,7 @@ const SelectTake = ({ addSelectedItem }) => {
   };
   const alchemy = initializeAlchemy(settings);
 
-  const testAddress = '0x4c6fd3d91dEDB234f711DDa33B059Eb928562a97';
+  const testAddress = '0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043';
   console.log('testAddress: ', testAddress);
 
   const [nfts, setNfts] = useState<any>([]);
@@ -356,6 +337,10 @@ const CreateOrderPage: NextPage = () => {
 
   const createOrder = async () => {
     const offerer = address;
+    if (!offerer) {
+      console.log('offerer address not found');
+      return;
+    }
     console.log('offerer: ', offerer);
 
     const provider = new providers.Web3Provider(window.ethereum as providers.ExternalProvider);
@@ -375,7 +360,20 @@ const CreateOrderPage: NextPage = () => {
     // 2. Save order data
     console.log('Order created!: ', order);
     console.log('Stringify: ', JSON.stringify(order));
-    return; // Create Order seems successful...
+
+    const newOrder: Order = {
+      id: 'V1-' + firestoreAutoId(),
+      createdAt: new Date(),
+      fulfilled: false,
+      offerer: offerer,
+      offerItems: offerItems,
+      considerationItems: considerationItems,
+      order: order,
+    };
+
+    console.log('Creating firestore doc...');
+    await setDoc(doc(firebaseFirestore, 'orders', newOrder.id), newOrder);
+    console.log('Created firestore doc');
   };
 
   return (
