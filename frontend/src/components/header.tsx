@@ -163,7 +163,7 @@ const Header: NextPage = () => {
             didTapOrderList,
             didTapCreateOrder,
             () => connect({ connector }),
-            'CONNECT',
+            'Connect',
           );
         })}
       </div>
