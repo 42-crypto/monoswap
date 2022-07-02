@@ -13,7 +13,7 @@ const Navbar = (
       <nav className='relative flex flex-wrap items-center justify-between px-2 py-3 bg-background'>
         <div className='container px-4 mx-auto flex flex-wrap items-center justify-between'>
           <div className='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'>
-            <a href='#'>
+            <a href='/'>
               <img className='h-8 w-auto sm:h-10' src='/logo.png' alt='' />
             </a>
             <button
