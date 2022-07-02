@@ -1,3 +1,4 @@
+import { Network, initializeAlchemy, getNftsForCollection } from '@alch/alchemy-sdk';
 import { createAlchemyWeb3 } from '@alch/alchemy-web3';
 
 import { Seaport } from '@opensea/seaport-js';
@@ -220,7 +221,7 @@ const SelectGive = ({ addSelectedItem }) => {
       {nfts && (
         <>
           <p>My NFTs</p>
-          {nfts.map((nft: NFT, index: number) => (
+          {nfts.slice(25, 35).map((nft: NFT, index: number) => (
             <div key={index} className='' onClick={() => selectNft(nft)}>
               <img className='object-cover h-16 w-16 rounded-t-md' src={nft.media[0].gateway}></img>
               <h2 className='text-xl text-gray-800'>{nft.title}</h2>
@@ -243,30 +244,31 @@ const SelectGive = ({ addSelectedItem }) => {
 };
 
 const SelectTake = ({ addSelectedItem }) => {
+  const settings = {
+    apiKey: 'LCmydbgvaVeJSe-TUIpDkU75E14J4G_W',
+    network: Network.MATIC_MUMBAI,
+    maxRetries: 10,
+  };
+  const alchemy = initializeAlchemy(settings);
+
   const testAddress = '0x4c6fd3d91dEDB234f711DDa33B059Eb928562a97';
   console.log('testAddress: ', testAddress);
+
   const [nfts, setNfts] = useState<any>([]);
   const [selected, setSelected] = useState<any>({});
-
-  // Get NFTs
-  const web3 = createAlchemyWeb3(
-    'https://polygon-mumbai.g.alchemy.com/v2/LCmydbgvaVeJSe-TUIpDkU75E14J4G_W',
-  );
 
   useEffect(() => {
     if (!testAddress) return;
     const getNfts = async () => {
-      const nfts = await web3.alchemy.getNfts({ owner: testAddress });
-      console.log(nfts);
-
+      // Get all NFTs
+      const response = await getNftsForCollection(alchemy, testAddress, {});
+      console.log('Game NFTs', JSON.stringify(response, null, 2));
+      const nfts = response.nfts;
       if (nfts) {
-        const numNfts = nfts.totalCount;
-        const nftList = nfts.ownedNfts;
-
-        console.log(`Total NFTs owned by ${testAddress}: ${numNfts} \n`);
-        setNfts(nftList);
+        setNfts(nfts);
       }
     };
+
     getNfts();
   }, []);
 
@@ -275,7 +277,30 @@ const SelectTake = ({ addSelectedItem }) => {
     console.log('nft', selected);
   };
 
-  const addNft = () => {};
+  const addNft = () => {
+    console.log('addNft');
+    if (!selected) {
+      console.log('None selected');
+      return;
+    }
+
+    const item: Item = {
+      name: selected.rawMetadata.name,
+      description: selected.rawMetadata.description,
+      imageUrl: selected.media[0].gateway,
+      tokenId: selected.tokenId,
+      contractAddress: selected.contract.address,
+      symbol: '',
+      game: '',
+      inputItem: {
+        itemType: ItemType.ERC721,
+        token: selected.contract.address,
+        identifier: selected.tokenId,
+      },
+    };
+
+    addSelectedItem(item);
+  };
 
   return (
     <div>
@@ -288,14 +313,14 @@ const SelectTake = ({ addSelectedItem }) => {
       {nfts && (
         <>
           <p>All Game NFTs</p>
-          {nfts.map((nft: NFT, index: number) => (
+          {nfts.map((nft: any, index: number) => (
             <div key={index} className='' onClick={() => selectNft(nft)}>
               <img className='object-cover h-16 w-16 rounded-t-md' src={nft.media[0].gateway}></img>
               <h2 className='text-xl text-gray-800'>{nft.title}</h2>
               <p className='text-xs'>ContractAddress: {nft.contract.address}</p>
-              <p className='text-xs'>metadata.name: {nft.metadata.name}</p>
-              <p className='text-xs'>metadata.description: {nft.metadata.description}</p>
-              <p className='text-xs'>metadata.image: {nft.metadata.image}</p>
+              <p className='text-xs'>metadata.name: {nft.rawMetadata.name}</p>
+              <p className='text-xs'>metadata.description: {nft.rawMetadata.description}</p>
+              <p className='text-xs'>metadata.image: {nft.rawMetadata.image}</p>
             </div>
           ))}
           <button
@@ -333,7 +358,6 @@ const CreateOrderPage: NextPage = () => {
     const offerer = address;
     console.log('offerer: ', offerer);
 
-    return;
     const provider = new providers.Web3Provider(window.ethereum as providers.ExternalProvider);
     const seaport = new Seaport(provider as any);
 
