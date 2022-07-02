@@ -29,7 +29,7 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout>
-      <div className='bg-background flex flex-direction: row max-w-6xl' style={{ margin: '5vh auto 0' }}>
+      <div className='bg-background flex flex-direction: row ' style={{ margin: '2vh auto 0', maxWidth: '78rem' }}>
         { gameData && (
             <aside className="w-4/12" aria-label="Sidebar">
               <img src={"/filter.png"} alt="filter" />;
@@ -38,8 +38,8 @@ const IndexPage: NextPage = () => {
         }
 
         {orderData && (
-          <div className="w-full">
-            <ul className= 'items justify-center justify-around'>
+          <div className="w-full" style={{marginTop: "60px"}}>
+            <ul className= 'items justify-center justify-around' style={{ rowGap: "60px"}}>
               {orderData.map(order => (
                 <>
                   <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl'>
