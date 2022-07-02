@@ -22,3 +22,27 @@ hr {
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  .glass-outer {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(20px);
+  }
+
+  .glass-inner {
+    background: linear-gradient(
+      131.95deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.3) 95.21%
+    );
+    backdrop-filter: blur(20px);
+  }
+
+  .linear-border {
+    background: linear-gradient(
+      131.95deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.3) 95.21%
+    );
+  }
+}
