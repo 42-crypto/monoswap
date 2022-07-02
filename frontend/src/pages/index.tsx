@@ -23,6 +23,8 @@ const IndexPage: NextPage = () => {
   // Fetch orders data
   const { data: orderData, error: orderError } = useCollection('orders');
 
+  const orderExeptFullfilled = orderData ? orderData.filter(order => order.fulfilled == false) : [];
+
   return (
     <Layout>
       <div className=''>
@@ -69,7 +71,7 @@ const IndexPage: NextPage = () => {
         {orderData && (
           <>
             <ul className= 'mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
-              {orderData.map(order => (
+              {orderExeptFullfilled.map(order => (
                 <>
                   <li key={order.id} className=''>
                     <Link href={`/orders/${order.id}`}>
