@@ -46,10 +46,10 @@ const IndexPage: NextPage = () => {
 
         {orderData && (
           <div className="w-full">
-            <ul className= 'grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
+            <ul className= 'items'>
               {orderData.map(order => (
                 <>
-                  <li key={order.id} className=''>
+                  <li key={order.id} className='item'>
                     <Link href={`/orders/${order.id}`}>
                       {OrderCard(
                         order.offerItems,
@@ -60,9 +60,26 @@ const IndexPage: NextPage = () => {
                 </>
               ))}
             </ul>
+            <></>
           </div>
         )}
       </div>
+      <style jsx>
+        {`
+          .items {
+            display: flex;
+            flex-direction : row;
+            width: 100%;
+            gap: 20px;
+            flex-wrap: wrap;
+          }
+          .item {
+            width: 308px;
+            height: 308px;
+            background: white;
+          }
+        `}
+      </style>
     </Layout>
   );
 };

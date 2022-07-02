@@ -10,14 +10,14 @@ const OrderCard = (
 
   return (
 
-    <div className='bg-white'>
-      <ul className= 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-evenly gap-10 aspect-square'>
-        <li className= ''>
+    <div className=''>
+      <ul className= 'items'>
+        <li className= 'item'>
           <ul className= 'justify-evenly gap-10'>
             {
              
              offerItemsToDisplay.map((item) => (
-              <li key={item.name} className=''>
+              <li key={item.name} className='nft'>
                 <img className = 'height-auto'src= {item.imageUrl} />
               </li>
               ))
@@ -31,7 +31,7 @@ const OrderCard = (
           <ul className= 'justify-evenly gap-10'>
             {
               considerationItemsToDisplay.map((item) => (
-              <li key={item.name} className=''>
+              <li key={item.name} className='nft'>
                 <img className = 'w-full height-auto'src= {item.imageUrl} />
               </li>
               ))
@@ -39,6 +39,20 @@ const OrderCard = (
           </ul>
         </li>
       </ul>
+      <style jsx>
+        {`
+          .items {
+            display: flex;
+            flex-direction: row;
+          }
+          .item {
+          }
+          .nft{
+            width: 84px;
+            height: 84px;
+          }
+        `}
+      </style>
     </div>
   )
 }
