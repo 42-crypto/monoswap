@@ -39,10 +39,10 @@ const IndexPage: NextPage = () => {
 
         {orderData && (
           <div className="w-full" style={{marginTop: "60px"}}>
-            <ul className= 'items justify-center justify-around' style={{ rowGap: "60px"}}>
+            <ul className= 'items justify-center justify-around' style={{ justifyContent: "start" }}>
               {orderData.map(order => (
                 <>
-                  <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl'>
+                  <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl' style={{ transform: "scale(0.9)"}}>
                     <Link href={`/orders/${order.id}`}>
                       {OrderCard(
                         order.offerItems,
@@ -63,7 +63,6 @@ const IndexPage: NextPage = () => {
             display: flex;
             flex-direction : row;
             width: 100%;
-            gap: 20px;
             flex-wrap: wrap;
           }
           .item {
