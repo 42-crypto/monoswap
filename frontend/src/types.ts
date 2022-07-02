@@ -3,6 +3,7 @@ import {
   CreateInputItem,
   OrderWithCounter,
 } from '@opensea/seaport-js/lib/types';
+import { imageOptimizer } from 'next/dist/server/image-optimizer';
 
 // Firestoreユーザー
 export type User = {
@@ -27,7 +28,7 @@ export type Item = {
   tokenId: string; // ERC721の場合。ERC20やMaticの場合は '0'
   contractAddress: string; // トークン発行のコントラクトアドレス
   symbol: string;
-  game: string; // GameのIDかname
+  gameName: string; // GameのIDかname
   inputItem: CreateInputItem; // SeaportのOfferやConsiderationの配列を作るために必要な情報はこれだけ
 };
 

@@ -8,8 +8,11 @@ module.exports = {
         accent: '#007ace',
         darkGray: '#8E849E',
         lightGray: '#8E849E',
-        background: '#1D093D'
+        background: '#1D093D',
       },
+    },
+    fontSize: {
+      h3: '2rem',
     },
   },
   plugins: [],
