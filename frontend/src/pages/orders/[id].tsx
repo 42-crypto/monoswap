@@ -92,6 +92,26 @@ const OrderPage = () => {
         <>
           <p>Order Data is available!</p>
           <p className='text-xs'>{JSON.stringify(data.order)}</p>
+          <div>
+            <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give　本当は逆</h2>
+            {data.offerItems.map((item, index) => (
+              <div key={index} className=''>
+                <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
+                <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+              </div>
+            ))}
+          </div>
+          <br />
+          <div>
+            <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Take　本当は逆</h2>
+            {data.considerationItems.map((item, index) => (
+              <div key={index} className=''>
+                <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
+                <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+              </div>
+            ))}
+          </div>
+          <br />
         </>
       )}
       <button
