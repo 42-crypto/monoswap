@@ -11,7 +11,7 @@ type Props = {
 //  <div className='bg-white mx-auto px-10 pb-4'>
 
 const Layout = ({ children, title = 'Monoswap' }: Props) => (
-  <div className=''>
+  <div className='bg-background h-screen'>
     <Head>
       <title>{title}</title>
       <link rel='icon' href='/favicon.ico' />

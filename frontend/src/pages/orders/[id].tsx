@@ -62,55 +62,7 @@ const OrderPage: NextPage = () => {
 
   return (
     <Layout title='Order Detail'>
-      <div className='flex items-center justify-center h-screen bg-black'>
-        <div className='flex flex-col items-center'>
-          <div className='flex items-center space-x-16'>
-            <div className='flex flex-col'>
-              <h2 className='text-primary font-bold text-h3 text-center mb-8'>Give</h2>
-              <div className='glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
-                <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                </div>
-              </div>
-            </div>
-            <div className='h-6'>
-              <img className='' src='/swap.svg' alt='swap' />
-            </div>
-            <div className='flex flex-col'>
-              <h2 className='text-primary font-bold text-h3 text-center mb-8'>Take</h2>{' '}
-              <div className='glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
-                <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                  <div className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <button
-              className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
-              onClick={fulfillOrder}
-            >
-              FulFill
-            </button>
-          </div>
-          <div className='flex justify-center mt-12 space-x-1'>
-            <div>
-              <p className=' text-darkGray text-base'>Created by</p>
-            </div>
-            <div>
-              <a suppressHydrationWarning={true} className='text-[#24D6DD] text-base'>
-                {address}
-              </a>
-            </div>
-          </div>
-        </div>
-
+      <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background'>
         {error && (
           <>
             <div>Failed to load</div>
@@ -121,33 +73,76 @@ const OrderPage: NextPage = () => {
             <div>Loading...</div>
           </>
         )}
-        {false && (
-          <>
-            <div>
-              <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
-                Give　本当は逆
-              </h2>
-              {data.offerItems.map((item, index) => (
-                <div key={index} className=''>
-                  <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
-                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+        {data && (
+          <div className='flex flex-col items-center'>
+            <div className='flex items-center space-x-16'>
+              <div className='flex flex-col'>
+                <h2 className='text-primary font-bold text-h3 text-center mb-8'>Give</h2>
+                <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
+                  <div className='grid grid-cols-3 grid-rows-3 gap-2'>
+                    {data.offerItems.map((item, index) => (
+                      <div
+                        key={index}
+                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      >
+                        <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
+                      </div>
+                    ))}
+                    {data.offerItems.length < 9 &&
+                      [...Array(9 - data.offerItems.length)].map((e, i) => (
+                        <div
+                          key={i}
+                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        ></div>
+                      ))}
+                  </div>
                 </div>
-              ))}
-            </div>
-            <br />
-            <div>
-              <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
-                Take　本当は逆
-              </h2>
-              {data.considerationItems.map((item, index) => (
-                <div key={index} className=''>
-                  <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
-                  <p className='text-sm font-medium text-gray-900'>{item.name}</p>
+              </div>
+              <div className='h-6'>
+                <img className='' src='/swap.svg' alt='swap' />
+              </div>
+              <div className='flex flex-col'>
+                <h2 className='text-primary font-bold text-h3 text-center mb-8'>Take</h2>
+                <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
+                  <div className='grid grid-cols-3 grid-rows-3 gap-2'>
+                    {data.considerationItems.map((item, index) => (
+                      <div
+                        key={index}
+                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      >
+                        <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
+                      </div>
+                    ))}
+                    {data.considerationItems.length < 9 &&
+                      [...Array(9 - data.considerationItems.length)].map((e, i) => (
+                        <div
+                          key={i}
+                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        ></div>
+                      ))}
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
-            <br />
-          </>
+            <div>
+              <button
+                className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
+                onClick={fulfillOrder}
+              >
+                FulFill
+              </button>
+            </div>
+            <div className='flex justify-center mt-12 space-x-1'>
+              <div>
+                <p className=' text-darkGray text-base'>Created by</p>
+              </div>
+              <div>
+                <a suppressHydrationWarning={true} className='text-[#24D6DD] text-base'>
+                  {address}
+                </a>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </Layout>
