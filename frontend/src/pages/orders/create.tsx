@@ -32,7 +32,7 @@ const CreateOrderPage: NextPage = () => {
   const [considerationItems, setConsiderationItems] = useState<Item[]>([]);
 
   const [showGive, setShowGive] = useState(false);
-  const [showtake, setShowTake] = useState(false);
+  const [showTake, setShowTake] = useState(false);
 
   const addOfferItem = (item: Item) => {
     console.log('adding offer item...');
@@ -130,19 +130,22 @@ const CreateOrderPage: NextPage = () => {
                   {considerationItems.map((item, index) => (
                     <div
                       key={index}
-                      className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
                     >
                       <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                     </div>
                   ))}
-                  <div className='flex items-center justify-center glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+                  <div
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    onClick={() => (showTake ? setShowTake(false) : setShowTake(true))}
+                  >
                     <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />
                   </div>
                   {considerationItems.length < 9 - 1 &&
                     [...Array(9 - 1 - considerationItems.length)].map((e, i) => (
                       <div
                         key={i}
-                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-inner=empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                       ></div>
                     ))}
                 </div>
@@ -162,6 +165,11 @@ const CreateOrderPage: NextPage = () => {
         </div>
       </div>
       <SelectGive showGive={showGive} setShowGive={setShowGive} addSelectedItem={addOfferItem} />
+      <SelectTake
+        showTake={showTake}
+        setShowTake={setShowTake}
+        addSelectedItem={addConsiderationItem}
+      />
     </Layout>
   );
 };

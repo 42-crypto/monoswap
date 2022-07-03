@@ -125,7 +125,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
   return (
     <>
       {showGive && (
-        <div className='glass-modal rounded-tl-[20px] border-2 border-white/40 fixed top-0 right-0 h-screen w-1/2 mt-[87px]'>
+        <div className='glass-modal rounded-tl-[20px] border-2 border-white/40 fixed top-0 right-0 h-screen mt-[87px]'>
           {!nfts && (
             <>
               <div>Loading...</div>
