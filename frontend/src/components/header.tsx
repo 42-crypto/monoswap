@@ -15,6 +15,7 @@ import {
   useNetwork,
   useSignMessage,
 } from 'wagmi';
+import { useAuthState } from '../hooks/useAuthState'
 
 // eslint-disable-next-line import/no-unresolved
 import Navbar from '@/components/navbar';
@@ -33,8 +34,8 @@ const Header: NextPage = () => {
     address?: string;
     error?: Error;
     loading?: boolean;
-    currentUser?: User;
   }>({});
+  const { isSignedIn } = useAuthState()
 
   const signOut = async () => {
     await fetch('/api/logout', { method: 'POST' });
@@ -83,7 +84,8 @@ const Header: NextPage = () => {
         .then((userCredential) => {
           console.log('success to firebase sign in');
           const user = userCredential.user;
-          setState((x) => ({ ...x, currentUser: user, address, loading: false }));
+          console.log('aaaaaa')
+          setState((x) => ({ ...x, address, loading: false }));
         })
         .catch((error) => {
           console.log('fail firebase sign in');
@@ -91,7 +93,7 @@ const Header: NextPage = () => {
             .then((userCredential) => {
               console.log('success to create firebase user');
               const user = userCredential.user;
-              setState((x) => ({ ...x, currentUser: user, address, loading: false }));
+              setState((x) => ({ ...x, address, loading: false }));
             })
             .catch((error) => {
               console.log('fail to create firebase user');
@@ -114,7 +116,7 @@ const Header: NextPage = () => {
 
   const didTapOrderList = async () => {
     console.log('will create doc');
-    await setDoc(doc(firebaseFirestore, 'cities', 'LAbcd'), {
+    await setDoc(doc(firebaseFirestore, 'cities', 'LAbcdef'), {
       name: 'Los Angeles',
       state: 'CA',
       country: 'USA',
@@ -142,7 +144,7 @@ const Header: NextPage = () => {
     return (
       <div>
         <div>
-          {state.address && state.currentUser
+          {state.address && isSignedIn 
             ? // user has signed in
               Navbar(didTapOrderList, didTapCreateOrder, signOut, address)
             : Navbar(didTapOrderList, didTapCreateOrder, signIn, 'Sign In')}

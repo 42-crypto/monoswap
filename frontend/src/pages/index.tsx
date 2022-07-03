@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { useCollection } from 'swr-firestore-v9';
+import React from 'react';
 
 import Layout from '@/components/layout';
 import OrderCard from '@/components/ordercard';
@@ -23,55 +24,25 @@ const IndexPage: NextPage = () => {
   // Fetch orders data
   const { data: orderData, error: orderError } = useCollection('orders');
 
+  const orderExeptFullfilled = orderData ? orderData.filter(order => order.fulfilled == false) : [];
+
+
   return (
     <Layout>
-      <div className=''>
-        <h2 className='font-semibold text-2xl'>Game List</h2>
-        {gameError && (
-          <>
-            <div>Failed to load</div>
-          </>
-        )}
-        {!gameError && !gameData && (
-          <>
-            <div>Loading...</div>
-          </>
-        )}
-        {gameData && (
-          <>
-            <ul className=''>
-              {gameData.map((game) => (
-                <>
-                  <li key={game.id} className=''>
-                    <div>
-                      <p>name: {game.name}</p>
-                      <p>description: {game.description}</p>
-                      <p>imageUrl: {game.imageUrl}</p>
-                    </div>
-                  </li>
-                </>
-              ))}
-            </ul>
-          </>
-        )}
+      <div className='bg-background flex flex-direction: row ' style={{ margin: '2vh auto 0', maxWidth: '78rem' }}>
+        { gameData && (
+            <aside className="w-4/12" aria-label="Sidebar">
+              <img src={"/filter.png"} alt="filter" />;
+            </aside>
+          )
+        }
 
-        <h2 className='font-semibold text-2xl'>Order List</h2>
-        {orderError && (
-          <>
-            <div>Failed to load</div>
-          </>
-        )}
-        {!orderError && !orderData && (
-          <>
-            <div>Loading...</div>
-          </>
-        )}
         {orderData && (
-          <>
-            <ul className= 'mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
+          <div className="w-full" style={{marginTop: "60px"}}>
+            <ul className= 'items justify-center justify-around' style={{ justifyContent: "start" }}>
               {orderData.map(order => (
                 <>
-                  <li key={order.id} className=''>
+                  <li key={order.id} className='item glass-outer border-2 border-white/40 p-5 rounded-2xl' style={{ transform: "scale(0.9)"}}>
                     <Link href={`/orders/${order.id}`}>
                       {OrderCard(
                         order.offerItems,
@@ -82,9 +53,28 @@ const IndexPage: NextPage = () => {
                 </>
               ))}
             </ul>
-          </>
+            <></>
+          </div>
         )}
       </div>
+      <style jsx>
+        {`
+          .items {
+            display: flex;
+            flex-direction : row;
+            width: 100%;
+            flex-wrap: wrap;
+          }
+          .item {
+            width: 308px;
+            height: 308px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						gap: 28px;
+          }
+        `}
+      </style>
     </Layout>
   );
 };
