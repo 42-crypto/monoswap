@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
 import Footer from './footer';
-import SearchField from './searchField';
 import Header from './header';
 
 type Props = {
@@ -32,7 +31,6 @@ const Layout = ({ children, title = 'Monoswap' }: Props) => (
     </Head>
     {/* <style jsx global>{``}</style> */}
     <Header />
-    <SearchField />
     <main>{children}</main>
     {/* <Footer /> */}
   </div>

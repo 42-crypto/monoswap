@@ -3,6 +3,7 @@ import { Seaport } from '@opensea/seaport-js';
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import { doc, setDoc, updateDoc, addDoc, collection } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -117,7 +118,7 @@ const OrderPage: NextPage = () => {
                       [...Array(9 - data.considerationItems.length)].map((e, i) => (
                         <div
                           key={i}
-                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                         ></div>
                       ))}
                   </div>
@@ -125,12 +126,14 @@ const OrderPage: NextPage = () => {
               </div>
             </div>
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
                 onClick={fulfillOrder}
               >
                 FulFill
-              </button>
+              </motion.button>
             </div>
             <div className='flex justify-center mt-12 space-x-1'>
               <div>

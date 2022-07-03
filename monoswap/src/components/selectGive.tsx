@@ -178,7 +178,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                     {nfts.map((nft: NFT, index: number) => (
                       <div
                         key={index}
-                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50`}
+                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50 cursor-pointer`}
                         onClick={() => selectNft(nft)}
                       >
                         <div className='glass-modal-inner rounded-[14px] overflow-hidden flex items-center justify-center'>
