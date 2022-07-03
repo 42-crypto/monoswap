@@ -1,15 +1,26 @@
 ### プロジェクト名
-
+monoswap
 ### プロジェクトについて（2-3行）
-
+ゲーミングメタバース向け任意の個数のNFTアイテム同士を物々交換できるプラットフォーム
+Openseaが一ヶ月前に公開したマーケットプレイスプロトコル「Seaport」を利用し複数のNFT同士の交換を実現
 ### 解決しようとしている課題
-
+ゲーミングメタバースで不要なNFTアイテムと自分がほしいNFTアイテムを交換したい
 ### 使用した技術
+- Serport Protocol(Opensea公開のマーケットプレイスプロトコル)
+- Alchemy
+- Pinata
+- React.js
+- Next.js
+- Firebase(Firebase Auth,Firestore)
+- Sign In With Ethreum
 
 ### スマートコントラクトのPolygonscanリンク
-
+- Seaportのコントラクト
+- Seaportにおけるmonoswapを利用したトランザクション
+- サービスのテスト用NFT
+- https://mumbai.polygonscan.com/address/0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043
 ### 直面した課題
-
+- Seaprotocolの情報がリリース直後のため少なく手探りで進めた
 ---
 
 ### 概要
