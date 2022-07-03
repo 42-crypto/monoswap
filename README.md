@@ -1,12 +1,22 @@
 ### プロジェクト名
 monoswap
+
 ### プロジェクトについて
-ゲーミングメタバース向け任意の個数のNFTアイテム同士を物々交換できるプラットフォーム
+
+MonoswapはメタバースのNFTアイテム交換所です。
+
+ゲーム内で手に入れた、任意の個数のNFTアイテム同士を物々交換できます。
+
 Openseaが一ヶ月前に公開したマーケットプレイスプロトコル「Seaport」を利用し複数のNFT同士の交換を実現
+
 ### 解決しようとしている課題
-ゲーミングメタバースで不要なNFTアイテムと自分がほしいNFTアイテムを交換したい
+
+ゲーミングメタバースで手に入れた不要なNFTアイテムと自分がほしいNFTアイテムを交換したい。
+
+ギルドなどのゲームコミュニティwip
+
 ### 使用した技術
-- Serport Protocol(Opensea公開のマーケットプレイスプロトコル)
+- Seaport Protocol（Opensea公開のマーケットプレイスプロトコル）
 - Alchemy
 - Pinata
 - React.js
@@ -15,23 +25,9 @@ Openseaが一ヶ月前に公開したマーケットプレイスプロトコル�
 - Sign In With Ethreum
 
 ### スマートコントラクトのPolygonscanリンク
-- Seaportのコントラクト
-- Seaportにおけるmonoswapを利用したトランザクション
-- サービスのテスト用NFT:https://mumbai.polygonscan.com/address/0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043
+- Seaportのコントラクト：https://polygonscan.com/address/0x00000000006c3852cbEf3e08E8dF289169EdE581
+- Monoswapを利用して実現したトランザクション：https://mumbai.polygonscan.com/address/0x96b1bd9E8aF7e3a0d840080690Ca7e30a7b3C852#tokentxnsErc721
+- サービスのテスト用NFT：https://mumbai.polygonscan.com/address/0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043
+
 ### 直面した課題
 - Seaprotocolの情報がリリース直後のため少なく手探りで進めた
----
-
-### 概要
-ウォレットで接続したユーザーはOrderの作成、閲覧、Fulfillすることができる。
-
-### Offerer
-1. New Orderから新しいオーダー作成画面
-2. 自分のウォレットにあるトークン（ERC721・ERC20）からOffer（提供できるアイテムの配列）を選択
-3. ゲーム一覧？からConsideration（ほしいアイテムの配列）を選択
-4. Orderが存在する期間、Tipを選択
-5. Order作成
-
-### Fullfiller
-1. Order一覧からフルフィルできるOrderを選択
-2. 自分のウォレットの中からConsiderationに合ったトークン（ERC721・ERC20）を選んでFulfillする
