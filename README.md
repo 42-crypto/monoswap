@@ -17,8 +17,7 @@ Openseaが一ヶ月前に公開したマーケットプレイスプロトコル�
 ### スマートコントラクトのPolygonscanリンク
 - Seaportのコントラクト
 - Seaportにおけるmonoswapを利用したトランザクション
-- サービスのテスト用NFT
-- https://mumbai.polygonscan.com/address/0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043
+- サービスのテスト用NFT:https://mumbai.polygonscan.com/address/0x5d424ce3fe2c56f2cee681f0c44ae965b41e9043
 ### 直面した課題
 - Seaprotocolの情報がリリース直後のため少なく手探りで進めた
 ---
