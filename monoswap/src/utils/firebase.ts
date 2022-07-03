@@ -1,17 +1,15 @@
-
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged} from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { useEffect, useState } from 'react'
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyBzDEu9e1bd1YVPneGeDkkxtwWObm4wVNY',
-  authDomain: 'monoswap-38aa2.firebaseapp.com',
-  projectId: 'monoswap-38aa2',
-  storageBucket: 'monoswap-38aa2.appspot.com',
-  messagingSenderId: '373755980897',
-  appId: '1:373755980897:web:c56e03ed71ac38e471ce20',
-  measurementId: 'G-N3M9FDP8J4',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);

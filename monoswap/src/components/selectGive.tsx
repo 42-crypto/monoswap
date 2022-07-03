@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-// import Backdrop from '@/components/backdrop';
 import { Item, Order } from '@/types';
 interface NFT {
   title: string;
@@ -58,11 +57,6 @@ const dropIn = {
     x: '100vh',
     opacity: 0,
   },
-};
-
-const backdrop = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
 };
 
 const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
@@ -295,21 +289,6 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                 )}
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-
-  return (
-    <AnimatePresence exitBeforeEnter>
-      {showGive && (
-        <motion.div
-          className='fixed top-0 left-0 w-screen h-screen bg-black z-10'
-          variants={backdrop}
-          initial='hidden'
-          animate='visible'
-        >
-          <p>TEST</p>
         </motion.div>
       )}
     </AnimatePresence>
