@@ -38,11 +38,43 @@ hr {
     backdrop-filter: blur(20px);
   }
 
+  .glass-inner-empty {
+    background: linear-gradient(
+      131.95deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.03) 95.21%
+    );
+  }
+
+  .glass-modal {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(64px);
+  }
+
+  .glass-modal-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(20px);
+  }
+
+  .glass-modal-inner {
+    background: linear-gradient(
+      131.95deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.3) 95.21%
+    );
+    border-radius: 14px;
+  }
+
   .linear-border {
     background: linear-gradient(
       131.95deg,
       rgba(255, 255, 255, 0.5) 0%,
       rgba(255, 255, 255, 0.3) 95.21%
     );
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }

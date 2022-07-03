@@ -13,10 +13,12 @@ import {
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import Layout from '@/components/layout';
 import SelectGive from '@/components/selectGive';
 import SelectTake from '@/components/selectTake';
 import { Item, Order } from '@/types';
@@ -28,6 +30,9 @@ const CreateOrderPage: NextPage = () => {
 
   const [offerItems, setOfferItems] = useState<Item[]>([]);
   const [considerationItems, setConsiderationItems] = useState<Item[]>([]);
+
+  const [showGive, setShowGive] = useState(false);
+  const [showTake, setShowTake] = useState(false);
 
   const addOfferItem = (item: Item) => {
     console.log('adding offer item...');
@@ -83,46 +88,89 @@ const CreateOrderPage: NextPage = () => {
   };
 
   return (
-    <>
-      <div className='bg-slate-100 h-96 w-96 p-10'>
-        <div className='grid grid-cols-3 grid-rows-3 gap-4'>
-          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
-          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
-          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
-          <div className='bg-red-400 rounded-lg h-24 w-24'></div>
+    <Layout title='Create Order'>
+      <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background'>
+        <div className='flex flex-col items-center'>
+          <div className='flex items-center space-x-16'>
+            <div className='flex flex-col'>
+              <h2 className='text-primary font-bold text-h3 text-center mb-8'>Give</h2>
+              <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
+                <div className='grid grid-cols-3 grid-rows-3 gap-2'>
+                  {offerItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    >
+                      <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
+                    </div>
+                  ))}
+                  <div
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    onClick={() => (showGive ? setShowGive(false) : setShowGive(true))}
+                  >
+                    <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />
+                  </div>
+                  {offerItems.length < 9 - 1 &&
+                    [...Array(9 - 1 - offerItems.length)].map((e, i) => (
+                      <div
+                        key={i}
+                        className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      ></div>
+                    ))}
+                </div>
+              </div>
+            </div>
+            <div className='h-6'>
+              <img className='' src='/swap.svg' alt='swap' />
+            </div>
+            <div className='flex flex-col'>
+              <h2 className='text-primary font-bold text-h3 text-center mb-8'>Take</h2>
+              <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
+                <div className='grid grid-cols-3 grid-rows-3 gap-2'>
+                  {considerationItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    >
+                      <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
+                    </div>
+                  ))}
+                  <div
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    onClick={() => (showTake ? setShowTake(false) : setShowTake(true))}
+                  >
+                    <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />
+                  </div>
+                  {considerationItems.length < 9 - 1 &&
+                    [...Array(9 - 1 - considerationItems.length)].map((e, i) => (
+                      <div
+                        key={i}
+                        className='glass-inner=empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                      ></div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
+              onClick={createOrder}
+            >
+              Create Order
+            </motion.button>
+          </div>
         </div>
       </div>
-      <h1 className='font-semibold text-2xl'>Create Order</h1>
-      <div>
-        <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Give</h2>
-        {offerItems.map((item, index) => (
-          <div key={index} className=''>
-            <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
-            <p className='text-sm font-medium text-gray-900'>{item.name}</p>
-          </div>
-        ))}
-      </div>
-      <br />
-      <div>
-        <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Take</h2>
-        {considerationItems.map((item, index) => (
-          <div key={index} className=''>
-            <img src={item.imageUrl} alt={item.name} className='object-cover h-32 w-32' />
-            <p className='text-sm font-medium text-gray-900'>{item.name}</p>
-          </div>
-        ))}
-      </div>
-      <br />
-      <SelectGive addSelectedItem={addOfferItem} />
-      <SelectTake addSelectedItem={addConsiderationItem} />
-      <br />
-      <button
-        className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
-        onClick={createOrder}
-      >
-        Create Order
-      </button>
-    </>
+      <SelectGive showGive={showGive} setShowGive={setShowGive} addSelectedItem={addOfferItem} />
+      <SelectTake
+        showTake={showTake}
+        setShowTake={setShowTake}
+        addSelectedItem={addConsiderationItem}
+      />
+    </Layout>
   );
 };
 
