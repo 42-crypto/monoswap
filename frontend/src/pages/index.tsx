@@ -10,6 +10,7 @@ import React from 'react';
 
 import Layout from '@/components/layout';
 import OrderCard from '@/components/ordercard';
+import SearchField from '../components/searchField';
 
 import { fetcher } from '@/fetch/fetcher';
 import { Order, Game } from '@/types';
@@ -29,6 +30,7 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout>
+      <SearchField />
       <div className='bg-background flex flex-direction: row ' style={{ margin: '2vh auto 0', maxWidth: '78rem' }}>
         { gameData && (
             <aside className="w-4/12" aria-label="Sidebar">
@@ -38,7 +40,7 @@ const IndexPage: NextPage = () => {
         }
 
         {orderData && (
-          <div className="w-full" style={{marginTop: "60px"}}>
+          <div className="w-full" >
             <ul className= 'items justify-center justify-around' style={{ justifyContent: "start" }}>
               {orderData.map(order => (
                 <>
@@ -72,6 +74,14 @@ const IndexPage: NextPage = () => {
 						justify-content: center;
 						align-items: center;
 						gap: 28px;
+            transition-duration: 0.3s;
+            cursor: pointer;
+          }
+          .item:hover {
+            opacity: 0.4;
+            opacity: 0.6;
+            transition-duration: 0.3s;
+            background-color: rgb(255 255 255 / 0.6);
           }
         `}
       </style>
