@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { useCollection } from 'swr-firestore-v9';
 
+import { useAccount } from 'wagmi';
 import Layout from '@/components/layout';
 import OrderCard from '@/components/ordercard';
 import SearchField from '@/components/searchField';
@@ -15,6 +16,7 @@ import { fetcher } from '@/fetch/fetcher';
 import { Order, Game } from '@/types';
 
 const IndexPage: NextPage = () => {
+  const { address, isConnecting, isDisconnected } = useAccount();
   // Fetch games data
   //const { data: gameData, error: gameError } = useSWR('/api/games', fetcher);
   const { data: gameData, error: gameError } = useCollection('games');
@@ -48,11 +50,15 @@ const IndexPage: NextPage = () => {
                 <>
                   <li
                     key={order.id}
-                    className='item glass-outer border-2 border-white/40hover: p-5 rounded-2xl cursor-pointer'
+                    className='item glass-outer border-2 border-white/40 hover:border-[#24D6DD] p-5 rounded-2xl cursor-pointer'
                     style={{ transform: 'scale(0.9)' }}
                   >
                     <Link href={`/orders/${order.id}`}>
-                      {OrderCard(order.offerItems, order.considerationItems)}
+                      {OrderCard(
+                        order.offer == address,
+                        order.offerItems,
+                        order.considerationItems,
+                      )}
                     </Link>
                   </li>
                 </>
@@ -79,12 +85,6 @@ const IndexPage: NextPage = () => {
             gap: 28px;
             transition-duration: 0.3s;
             cursor: pointer;
-          }
-          .item:hover {
-            opacity: 0.4;
-            opacity: 0.6;
-            transition-duration: 0.3s;
-            background-color: rgb(255 255 255 / 0.6);
           }
         `}
       </style>
