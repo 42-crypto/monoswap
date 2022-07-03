@@ -105,7 +105,7 @@ const CreateOrderPage: NextPage = () => {
                     </div>
                   ))}
                   <div
-                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60 cursor-pointer'
                     onClick={() => (showGive ? setShowGive(false) : setShowGive(true))}
                   >
                     <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />
@@ -136,7 +136,7 @@ const CreateOrderPage: NextPage = () => {
                     </div>
                   ))}
                   <div
-                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
+                    className='flex items-center justify-center glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60 cursor-pointer'
                     onClick={() => (showTake ? setShowTake(false) : setShowTake(true))}
                   >
                     <img className='h-[30px] w-[30px]' src='/plus.png' alt='plus' />

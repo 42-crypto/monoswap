@@ -3,6 +3,7 @@ import { Seaport } from '@opensea/seaport-js';
 import { ethers, providers } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import { doc, setDoc, updateDoc, addDoc, collection } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -61,7 +62,7 @@ const OrderPage: NextPage = () => {
   };
 
   if (address == data?.offerer) {
-    console.log('this is my order')
+    console.log('this is my order');
     return (
       <Layout title='Order Detail'>
         <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background'>
@@ -85,7 +86,7 @@ const OrderPage: NextPage = () => {
                       {data.offerItems.map((item, index) => (
                         <div
                           key={index}
-                          className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                         >
                           <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                         </div>
@@ -110,7 +111,7 @@ const OrderPage: NextPage = () => {
                       {data.considerationItems.map((item, index) => (
                         <div
                           key={index}
-                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                         >
                           <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                         </div>
@@ -119,7 +120,7 @@ const OrderPage: NextPage = () => {
                         [...Array(9 - data.considerationItems.length)].map((e, i) => (
                           <div
                             key={i}
-                            className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                            className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                           ></div>
                         ))}
                     </div>
@@ -127,12 +128,14 @@ const OrderPage: NextPage = () => {
                 </div>
               </div>
               <div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
                   onClick={fulfillOrder}
                 >
                   FulFill
-                </button>
+                </motion.button>
               </div>
               <div className='flex justify-center mt-12 space-x-1'>
                 <div>
@@ -150,7 +153,7 @@ const OrderPage: NextPage = () => {
       </Layout>
     );
   } else {
-    console.log('this is not my order')
+    console.log('this is not my order');
     return (
       <Layout title='Order Detail'>
         <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background'>
@@ -174,7 +177,7 @@ const OrderPage: NextPage = () => {
                       {data.considerationItems.map((item, index) => (
                         <div
                           key={index}
-                          className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                         >
                           <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                         </div>
@@ -199,7 +202,7 @@ const OrderPage: NextPage = () => {
                       {data.offerItems.map((item, index) => (
                         <div
                           key={index}
-                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                          className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                         >
                           <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                         </div>
@@ -208,7 +211,7 @@ const OrderPage: NextPage = () => {
                         [...Array(9 - data.offerItems.length)].map((e, i) => (
                           <div
                             key={i}
-                            className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                            className='glass-inner-empty rounded-2xl h-[84px] w-[84px] border border-white/60'
                           ></div>
                         ))}
                     </div>
@@ -216,12 +219,14 @@ const OrderPage: NextPage = () => {
                 </div>
               </div>
               <div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   className='bg-primary text-white text-[20px] font-bold py-4 px-32 rounded-xl'
                   onClick={fulfillOrder}
                 >
                   FulFill
-                </button>
+                </motion.button>
               </div>
               <div className='flex justify-center mt-12 space-x-1'>
                 <div>
