@@ -84,7 +84,7 @@ const OrderPage: NextPage = () => {
                     {data.offerItems.map((item, index) => (
                       <div
                         key={index}
-                        className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                       >
                         <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                       </div>
@@ -109,7 +109,7 @@ const OrderPage: NextPage = () => {
                     {data.considerationItems.map((item, index) => (
                       <div
                         key={index}
-                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'
+                        className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
                       >
                         <img src={item.imageUrl} alt={item.name} className='object-contain p-2' />
                       </div>

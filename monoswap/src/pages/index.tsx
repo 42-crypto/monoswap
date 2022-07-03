@@ -31,7 +31,6 @@ const IndexPage: NextPage = () => {
   return (
     <Layout>
       <SearchField />
-
       <div
         className='bg-background flex flex-direction: row '
         style={{ margin: '2vh auto 0', maxWidth: '78rem' }}
@@ -43,13 +42,13 @@ const IndexPage: NextPage = () => {
         )}
 
         {orderData && (
-          <div className='w-full' style={{ marginTop: '60px' }}>
+          <div className='w-full'>
             <ul className='items justify-center justify-around' style={{ justifyContent: 'start' }}>
               {orderData.map((order) => (
                 <>
                   <li
                     key={order.id}
-                    className='item glass-outer border-2 border-white/40 p-5 rounded-2xl cursor-pointer'
+                    className='item glass-outer border-2 border-white/40hover: p-5 rounded-2xl cursor-pointer'
                     style={{ transform: 'scale(0.9)' }}
                   >
                     <Link href={`/orders/${order.id}`}>
@@ -78,6 +77,14 @@ const IndexPage: NextPage = () => {
             justify-content: center;
             align-items: center;
             gap: 28px;
+            transition-duration: 0.3s;
+            cursor: pointer;
+          }
+          .item:hover {
+            opacity: 0.4;
+            opacity: 0.6;
+            transition-duration: 0.3s;
+            background-color: rgb(255 255 255 / 0.6);
           }
         `}
       </style>

@@ -38,23 +38,24 @@ interface NFT {
   ];
 }
 
-const slide = {
+const dropIn = {
   hidden: {
-    y: '-100vh',
+    x: '100vh',
     opacity: 0,
   },
   visible: {
-    y: '0',
+    x: '0',
     opacity: 1,
     transition: {
-      duration: 0.1,
+      duration: 0.075,
       type: 'spring',
-      damping: 25,
-      stiffness: 500,
+      damping: 30,
+      mass: 0.75,
+      stiffness: 300,
     },
   },
   exit: {
-    y: '100vh',
+    x: '100vh',
     opacity: 0,
   },
 };
@@ -87,6 +88,9 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
 
         console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
         setNfts(nftList);
+        if (nftList.length > 1) {
+          setSelected(nftList[0]);
+        }
       }
     };
     getNfts();
@@ -123,9 +127,15 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
   };
 
   return (
-    <>
+    <AnimatePresence exitBeforeEnter>
       {showGive && (
-        <div className='glass-modal rounded-tl-[20px] border-2 border-white/40 fixed top-0 right-0 h-screen mt-[87px]'>
+        <motion.div
+          className='glass-modal rounded-tl-[20px] border-2 border-white/40 fixed top-0 right-0 h-screen mt-[87px]'
+          variants={dropIn}
+          initial='hidden'
+          animate='visible'
+          exit='exit'
+        >
           {!nfts && (
             <>
               <div>Loading...</div>
@@ -133,7 +143,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
           )}
           <div className='flex flex-col items-start py-8 pl-8 pr-16'>
             <div
-              className='mb-6'
+              className='mb-6 cursor-pointer'
               onClick={() => (showGive ? setShowGive(false) : setShowGive(true))}
             >
               <img className='' src='/double_arrow_right.png' alt='double_arrow_right' />
@@ -178,7 +188,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                     {nfts.map((nft: NFT, index: number) => (
                       <div
                         key={index}
-                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50 cursor-pointer`}
+                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50 hover:border-[#24D6DD] cursor-pointer`}
                         onClick={() => selectNft(nft)}
                       >
                         <div className='glass-modal-inner rounded-[14px] overflow-hidden flex items-center justify-center'>
@@ -189,7 +199,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                         </div>
                         <div className='flex flex-col item-start pt-[10px] pl-4'>
                           <p className='text-white text-[12px] font-bold'>{nft.metadata.name}</p>
-                          <p className='text-white text-[12px]'>Axie Infinity</p>
+                          <p className='text-white text-[12px]'>Exie Infinity</p>
                         </div>
                       </div>
                     ))}
@@ -273,19 +283,21 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                         </div>
                       </div>
                     </div>
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       className='bg-primary text-white text-base font-bold w-full py-2 px-4 mt-[28px] rounded-2xl'
                       onClick={addNft}
                     >
-                      Add NFT
-                    </button>
+                      Add to Give
+                    </motion.button>
                   </div>
                 )}
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 
   return (

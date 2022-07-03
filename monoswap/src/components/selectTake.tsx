@@ -1,5 +1,6 @@
 import { Network, initializeAlchemy, getNftsForCollection } from '@alch/alchemy-sdk';
 import { ItemType } from '@opensea/seaport-js/lib/constants';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
@@ -38,6 +39,28 @@ interface NFT {
   ];
 }
 
+const dropIn = {
+  hidden: {
+    x: '-100vh',
+    opacity: 0,
+  },
+  visible: {
+    x: '0',
+    opacity: 1,
+    transition: {
+      duration: 0.075,
+      type: 'spring',
+      damping: 30,
+      mass: 0.75,
+      stiffness: 300,
+    },
+  },
+  exit: {
+    x: '-100vh',
+    opacity: 0,
+  },
+};
+
 const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
   const { address, isConnecting, isDisconnected } = useAccount();
   console.log('account address: ', address);
@@ -64,6 +87,9 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
       const nfts = response.nfts;
       if (nfts) {
         setNfts(nfts);
+        if (nfts.length > 1) {
+          setSelected(nfts[0]);
+        }
       }
     };
 
@@ -100,9 +126,15 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
     addSelectedItem(item);
   };
   return (
-    <>
+    <AnimatePresence exitBeforeEnter>
       {showTake && (
-        <div className='glass-modal rounded-tr-[20px] border-2 border-white/40 fixed top-0 left-0 h-screen mt-[87px]'>
+        <motion.div
+          className='glass-modal rounded-tr-[20px] border-2 border-white/40 fixed top-0 left-0 h-screen mt-[87px]'
+          variants={dropIn}
+          initial='hidden'
+          animate='visible'
+          exit='exit'
+        >
           {!nfts && (
             <>
               <div>Loading...</div>
@@ -110,7 +142,7 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
           )}
           <div className='flex flex-col items-end py-8 pl-8 pr-16'>
             <div
-              className='mb-6'
+              className='mb-6 cursor-pointer'
               onClick={() => (showTake ? setShowTake(false) : setShowTake(true))}
             >
               <img className='' src='/double_arrow_left.png' alt='double_left_right' />
@@ -155,7 +187,7 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
                     {nfts.map((nft: NFT, index: number) => (
                       <div
                         key={index}
-                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50`}
+                        className={`flex flex-col glass-inner-empty h-[222px] rounded-2xl border-2 border-white/50 hover:border-[#24D6DD]`}
                         onClick={() => selectNft(nft)}
                       >
                         <div className='glass-modal-inner rounded-[14px] overflow-hidden flex items-center justify-center'>
@@ -166,7 +198,7 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
                         </div>
                         <div className='flex flex-col item-start pt-[10px] pl-4'>
                           <p className='text-white text-[12px] font-bold'>{nft.rawMetadata.name}</p>
-                          <p className='text-white text-[12px]'>Axie Infinity</p>
+                          <p className='text-white text-[12px]'>Exie Infinity</p>
                         </div>
                       </div>
                     ))}
@@ -250,50 +282,21 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
                         </div>
                       </div>
                     </div>
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       className='bg-primary text-white text-base font-bold w-full py-2 px-4 mt-[28px] rounded-2xl'
                       onClick={addNft}
                     >
-                      Add NFT
-                    </button>
+                      Add to Take
+                    </motion.button>
                   </div>
                 )}
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
-    </>
-  );
-  return (
-    <div>
-      <h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>Select Take</h2>
-      {!nfts && (
-        <>
-          <div>Loading...</div>
-        </>
-      )}
-      {nfts && (
-        <>
-          <p>All Game NFTs</p>
-          {nfts.map((nft: any, index: number) => (
-            <div key={index} className='' onClick={() => selectNft(nft)}>
-              <img className='object-cover h-16 w-16 rounded-t-md' src={nft.media[0].gateway}></img>
-              <h2 className='text-xl text-gray-800'>{nft.title}</h2>
-              <p className='text-xs'>ContractAddress: {nft.contract.address}</p>
-              <p className='text-xs'>metadata.name: {nft.rawMetadata.name}</p>
-              <p className='text-xs'>metadata.description: {nft.rawMetadata.description}</p>
-              <p className='text-xs'>metadata.image: {nft.rawMetadata.image}</p>
-            </div>
-          ))}
-          <button
-            className='bg-blue-500 hover:bg-blue-700 text-white font-blod py-2 px-4 rounded'
-            onClick={addNft}
-          >
-            Add NFT
-          </button>
-        </>
-      )}
-    </div>
+    </AnimatePresence>
   );
 };
 

@@ -14,13 +14,15 @@ const OrderCard = (
       <ul className= 'items'>
         <li className= 'item'>
           <ul className= 'justify-evenly gap-10 item-nft'>
-            {
-             offerItemsToDisplay.map((item) => (
-              <li key={item.name} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
-                <img className = 'object-contain p-2'src= {item.imageUrl} />
-              </li>
-              ))
-            }
+            <li key={offerItemsToDisplay[0] ? offerItemsToDisplay[0].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {offerItemsToDisplay[0] ? offerItemsToDisplay[0].imageUrl : ""} />
+            </li>
+            <li key={offerItemsToDisplay[1] ? offerItemsToDisplay[1].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {offerItemsToDisplay[1] ? offerItemsToDisplay[1].imageUrl : ""} />
+            </li>
+            <li key={offerItemsToDisplay[2] ? offerItemsToDisplay[2].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {offerItemsToDisplay[2] ? offerItemsToDisplay[2].imageUrl : ""} />
+            </li>
           </ul>
         </li>
         <li className= 'flex items-center'>
@@ -28,13 +30,15 @@ const OrderCard = (
         </li>
         <li className= 'item'>
           <ul className= 'justify-evenly gap-10 item-nft'>
-            {
-              considerationItemsToDisplay.map((item) => (
-              <li key={item.name} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
-                <img className = 'object-contain p-2'src= {item.imageUrl} />
-              </li>
-              ))
-            }
+          <li key={considerationItemsToDisplay[0] ? considerationItemsToDisplay[0].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {considerationItemsToDisplay[0] ? considerationItemsToDisplay[0].imageUrl : ""} />
+            </li>
+            <li key={considerationItemsToDisplay[1] ? considerationItemsToDisplay[1].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {considerationItemsToDisplay[1] ? considerationItemsToDisplay[1].imageUrl : ""} />
+            </li>
+            <li key={considerationItemsToDisplay[2] ? considerationItemsToDisplay[2].name : ""} className='nft mb-2 glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60'>
+              <img className = 'object-contain p-2'src= {considerationItemsToDisplay[2] ? considerationItemsToDisplay[2].imageUrl : ""} />
+            </li>
           </ul>
         </li>
       </ul>
