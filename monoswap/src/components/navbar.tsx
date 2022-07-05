@@ -12,10 +12,10 @@ const Navbar = (
     <header>
       <nav className='relative flex flex-wrap items-center justify-between px-2 py-3 bg-background'>
         <div className='container px-4 mx-auto flex flex-wrap items-center justify-between'>
-          <div className='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start'>
-            <a href='/'>
+          <div className='w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start cursor-pointer	'>
+            <Link href={`/`}>
               <img className='h-8 w-auto sm:h-10' src='/logo.png' alt='' />
-            </a>
+            </Link>
             <button
               className='text-white cursor-pointer text-xl leading-none py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none'
               type='button'
