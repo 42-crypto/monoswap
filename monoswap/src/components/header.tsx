@@ -2,7 +2,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
-import Router from 'next/router'
+import Router from 'next/router';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -15,11 +15,10 @@ import {
   useNetwork,
   useSignMessage,
 } from 'wagmi';
-import { useAuthState } from '../hooks/useAuthState'
+import { useAuthState } from '../hooks/useAuthState';
 
 // eslint-disable-next-line import/no-unresolved
 import Navbar from '@/components/navbar';
-import { order1 } from '@/sampleData';
 import { firebaseApp, firebaseAuth, firebaseFirestore } from '@/utils/firebase';
 
 const Header: NextPage = () => {
@@ -35,7 +34,7 @@ const Header: NextPage = () => {
     error?: Error;
     loading?: boolean;
   }>({});
-  const { isSignedIn } = useAuthState()
+  const { isSignedIn } = useAuthState();
 
   const signOut = async () => {
     await fetch('/api/logout', { method: 'POST' });
@@ -84,7 +83,7 @@ const Header: NextPage = () => {
         .then((userCredential) => {
           console.log('success to firebase sign in');
           const user = userCredential.user;
-          console.log('aaaaaa')
+          console.log('aaaaaa');
           setState((x) => ({ ...x, address, loading: false }));
         })
         .catch((error) => {
@@ -111,7 +110,7 @@ const Header: NextPage = () => {
   };
 
   const didTapCreateOrder = async () => {
-    Router.push('/orders/create')
+    Router.push('/orders/create');
   };
 
   const didTapOrderList = async () => {
@@ -144,7 +143,7 @@ const Header: NextPage = () => {
     return (
       <div>
         <div>
-          {state.address && isSignedIn 
+          {state.address && isSignedIn
             ? // user has signed in
               Navbar(didTapOrderList, didTapCreateOrder, signOut, address)
             : Navbar(didTapOrderList, didTapCreateOrder, signIn, 'Sign In')}
