@@ -83,7 +83,7 @@ const OrderPage: NextPage = () => {
                   <h2 className='text-primary font-bold text-h3 text-center mb-8'>Give</h2>
                   <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
                     <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                      {data.offerItems.map((item, index) => (
+                      {data.offerItems.map((item: Item, index: number) => (
                         <div
                           key={index}
                           className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
@@ -108,7 +108,7 @@ const OrderPage: NextPage = () => {
                   <h2 className='text-primary font-bold text-h3 text-center mb-8'>Take</h2>
                   <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
                     <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                      {data.considerationItems.map((item, index) => (
+                      {data.considerationItems.map((item: Item, index: number) => (
                         <div
                           key={index}
                           className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
@@ -174,7 +174,7 @@ const OrderPage: NextPage = () => {
                   <h2 className='text-primary font-bold text-h3 text-center mb-8'>Give</h2>
                   <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
                     <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                      {data.considerationItems.map((item, index) => (
+                      {data.considerationItems.map((item: Item, index: number) => (
                         <div
                           key={index}
                           className='glass-inner rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'
@@ -199,7 +199,7 @@ const OrderPage: NextPage = () => {
                   <h2 className='text-primary font-bold text-h3 text-center mb-8'>Take</h2>
                   <div className='flex items-center justify-center glass-outer border-2 border-white/40 h-[308px] w-[308px] p-5 rounded-2xl mb-12'>
                     <div className='grid grid-cols-3 grid-rows-3 gap-2'>
-                      {data.offerItems.map((item, index) => (
+                      {data.offerItems.map((item: Item, index: number) => (
                         <div
                           key={index}
                           className='glass-outer rounded-2xl h-[84px] w-[84px] border border-white/60 hover:border-[#24D6DD]'

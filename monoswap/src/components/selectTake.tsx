@@ -61,7 +61,7 @@ const dropIn = {
   },
 };
 
-const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
+const SelectTake = ({ showTake, setShowTake, addSelectedItem }: any) => {
   const { address, isConnecting, isDisconnected } = useAccount();
   console.log('account address: ', address);
 
@@ -251,17 +251,21 @@ const SelectTake = ({ showTake, setShowTake, addSelectedItem }) => {
                         </div>
                         <div>
                           <div className='grid grid-cols-2 gap-3'>
-                            {selected.rawMetadata.attributes.map((attribute, index) => (
-                              <div
-                                key={index}
-                                className='border border-[#24D6DD] rounded-md p-2 flex flex-col items-center space-y-1'
-                              >
-                                <p className='text-[12px] text-[#24D6DD]'>{attribute.trait_type}</p>
-                                <p className='text-[14px] font-bold text-white'>
-                                  {attribute.value}
-                                </p>
-                              </div>
-                            ))}
+                            {selected.rawMetadata.attributes.map(
+                              (attribute: any, index: number) => (
+                                <div
+                                  key={index}
+                                  className='border border-[#24D6DD] rounded-md p-2 flex flex-col items-center space-y-1'
+                                >
+                                  <p className='text-[12px] text-[#24D6DD]'>
+                                    {attribute.trait_type}
+                                  </p>
+                                  <p className='text-[14px] font-bold text-white'>
+                                    {attribute.value}
+                                  </p>
+                                </div>
+                              ),
+                            )}
                           </div>
                         </div>
                       </div>
