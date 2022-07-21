@@ -6,8 +6,9 @@ module.exports = {
       colors: {
         primary: '#C206F3',
         accent: '#007ace',
-        darkGray: '#8E849E',
-        lightGray: '#8E849E',
+        darkGray: '#6C5F81',
+				normalGray:'8E849E',
+        lightGray: '#CBC6D2',
         background: '#1D093D',
       },
     },
