@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: 'build',
   reactStrictMode: true,
   images: {
     domains: ['lh3.googleusercontent.com'],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // eslint: {
+  // ignoreDuringBuilds: true,
+  // },
   // typescript: {
   //   // !! WARN !!
   //   // Dangerously allow production builds to successfully complete even if
