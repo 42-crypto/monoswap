@@ -31,7 +31,7 @@ const SampleCreateOrder: NextPage = () => {
       tokenId: '',
       contractAddress: '',
       symbol: '',
-      game: '',
+      gameName: '',
       inputItem: {
         itemType: ItemType.ERC721,
         token: '0xa3e62daa9a071085e44f606cfa5f2480d7e3133a',
@@ -48,7 +48,7 @@ const SampleCreateOrder: NextPage = () => {
       tokenId: '',
       contractAddress: '',
       symbol: '',
-      game: '',
+      gameName: '',
       inputItem: {
         itemType: ItemType.ERC721,
         token: '0x345186024fff73e0cdc4fed3b565e6c21815c7ed',

@@ -59,7 +59,7 @@ const dropIn = {
   },
 };
 
-const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
+const SelectGive = ({ showGive, setShowGive, addSelectedItem }: any) => {
   const { address, isConnecting, isDisconnected } = useAccount();
   console.log('account address: ', address);
   const [nfts, setNfts] = useState<any>([]);
@@ -246,7 +246,7 @@ const SelectGive = ({ showGive, setShowGive, addSelectedItem }) => {
                         </div>
                         <div>
                           <div className='grid grid-cols-2 gap-3'>
-                            {selected.metadata.attributes.map((attribute, index) => (
+                            {selected.metadata.attributes.map((attribute: any, index: number) => (
                               <div
                                 key={index}
                                 className='border border-[#24D6DD] rounded-md p-2 flex flex-col items-center space-y-1'
